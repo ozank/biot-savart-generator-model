@@ -14,7 +14,7 @@
 %       - Normal race tracks coil coordinates can be added
 
 % Axial Adjustment of Rotor Coils
-coil_Z_offset = 0; % coil is placed on X-Y plane, coil Z offset defines Z coordinate
+coil_Z_offset = 0; % coil is placed on X-Y plane, coil Z offset defines Z coordinates
 
 
 %CREATE WAVE WINDING DIMENSIONS
