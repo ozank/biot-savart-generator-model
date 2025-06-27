@@ -24,6 +24,8 @@
 machine.Npole = 120;                        % Number of Poles
 machine.pole_angle = 360 / machine.Npole;   % One pole pitch angle in degrees
 
+machine.Nstacks = 3; % Number of generator stator stacks in the axial direction
+
 % Main Radius Definitions
 HTS.R_mean = 2525/1000;     %meter, Mean radius of the HTS rotor
 

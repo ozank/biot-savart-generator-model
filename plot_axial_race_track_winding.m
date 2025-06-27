@@ -1,6 +1,6 @@
 %---------------------------------------------------
-%  NAME:      Plot Wave Winding.m
-%  WHAT:      Plots the wave windings and calculates the magnetic field using the Biot-Savart Calculation Method
+%  NAME:      Plot Axial Race Track Winding.m
+%  WHAT:      Plots the conventional race track winding and calculates the magnetic field using the Biot-Savart Calculation Method
 %  AUTHOR:    Ozan Keysan (06/2025)
 %  REQUIRED:  BSmag Toolbox 20150407 (for magnetic field calculations)
 %----------------------------------------------------
@@ -13,7 +13,7 @@ BSmag = BSmag_init(); % Initialize BSmag analysis
 machine_parameters;
 
 %Get Wave Winding Coordinates
-wave_winding_coordinates;
+axial_winding_coordinates;
 
 
 %BIOT SAVART MODEL SETTINGS
@@ -26,15 +26,17 @@ dGamma2 = 1e-2; % filament max discretization step [m]
 
 
 
-Nmodules_radial = 3; % Number of modules to be simulated in the radial direction, default 3
+Npoles_radial = 24; % Number of modules to be simulated in the radial direction, default 8
 
 %Create stack coils 
-% coils are placed symmetrically around Z-axis
-Coil_z_min = -0.5 *coil_to_coil_gap * machine.Nstacks %minimum coil z(-) for the outer stack
-
 % !!!
 %needs to be defined according to independent machine parameters!
 coil_to_coil_gap = 0.1; %ignoring coil thicknes, mid plane of the coils should be considered
+
+% coils are placed symmetrically around Z-axis
+Coil_z_min = -0.5 *coil_to_coil_gap * machine.Nstacks %minimum coil z(-) for the outer stack
+
+
 
 for s = 1:machine.Nstacks+1 %Create machine.Nstacks+1 number of coils in the axial direction, midplane Z=0
 
@@ -48,17 +50,27 @@ winding_coordinates_stack(:,3) = Coil_z_min + (s-1)*coil_to_coil_gap; %z coordin
 % 2D Rotation about a point
 % https://academo.org/demos/rotation-about-point/
 
-for n = 1:Nmodules_radial %rotate the modules in radial direction by rotating the original coil
+for n = 1:Npoles_radial %rotate the modules in radial direction by rotating the original coil
 
 winding_coordinates_rotated = winding_coordinates_stack;
 %rotation angle
-rotation_angle = 1 * (n-1) * machine.pole_angle * machine.Npole_per_module;
+rotation_angle = 1 * (n-1) * machine.pole_angle;
 winding_coordinates_rotated(:,1) = winding_coordinates(:,1)*cosd(rotation_angle) - winding_coordinates(:,2)*sind(rotation_angle);
 winding_coordinates_rotated(:,2) = winding_coordinates(:,2)*cosd(rotation_angle) + winding_coordinates(:,1)*sind(rotation_angle);
 
 %add rotated coils ( on the + z axis)
-[BSmag] = BSmag_add_filament(BSmag,winding_coordinates_rotated,I,dGamma2);
 
+% Change direction of current for alternating poles!!!
+if mod(n, 2) == 0
+  % pole is even -> Reverse current polarity
+[BSmag] = BSmag_add_filament(BSmag,winding_coordinates_rotated,-I,dGamma2); %add reversed coil pole
+
+else
+  % pole is odd -> Keep current polarity positive
+
+[BSmag] = BSmag_add_filament(BSmag,winding_coordinates_rotated,I,dGamma2); % add normal polarity pole
+
+end
 
 end
 
@@ -66,7 +78,7 @@ end
 
 %End Winding Coil Loops
 
-for n = 1:(machine.Npole_per_module/2 * Nmodules_radial)  % Add end windings on one side with half of the pole number per module * module number
+for n = 1:( Npoles_radial/2)  % Add end windings on one side with half of the pole number per module * module number
 
 %rotation angle per end winding over Z-axis
 rotation_angle = (2*(n-1) + 0.5) * machine.pole_angle;
@@ -91,7 +103,7 @@ end
 % Field points (where we want to calculate the field)
 
 %Solution Space 
-R_min = 0;  %Solution space inner radius
+R_min = 2.2;  %Solution space inner radius
 R_max = 3; %Solution space outer space
 
 angle_offset = 24; %Solution space starting point
