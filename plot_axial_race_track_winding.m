@@ -26,7 +26,7 @@ dGamma2 = 1e-2; % filament max discretization step [m]
 
 
 
-Npoles_radial = 24; % Number of modules to be simulated in the radial direction, default 8
+Npoles_radial = 8; % Number of modules to be simulated in the radial direction, default 8
 
 %Create stack coils 
 % !!!
@@ -106,7 +106,7 @@ end
 R_min = 2.2;  %Solution space inner radius
 R_max = 3; %Solution space outer space
 
-angle_offset = 24; %Solution space starting point
+angle_offset = 0; %Solution space starting point
 angle_span = 24; % Solution angle span (degrees)
 
 data_point_angle= 20;  % number of data points in the tangential directions (through angle)
@@ -143,6 +143,36 @@ figure(1)
 figure(2), hold on, box on, grid on
     contourf(X, Y, BZ), colorbar
 xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
+
+
+% Field points (where we want to calculate the field)
+x_M = linspace(2,3,21); % x [m]
+y_M = linspace(0,1.2,22); % y [m]
+z_M = linspace(-0.2,0.2,23); % z [m]
+[X_M,Y_M,Z_M]=meshgrid(x_M,y_M,z_M);
+BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % shows the field points volume
+% Biot-Savart Integration
+[BSmag,X,Y,Z,BX,BY,BZ] = BSmag_get_B(BSmag,X_M,Y_M,Z_M);
+
+% Plot Bz on the volume
+figure(3), hold on, box on, grid on
+Gamma = winding_coordinates_rotated;
+plot3(Gamma(:,1),Gamma(:,2),Gamma(:,3),'.-r') % plot filament
+slice(X,Y,Z,BZ,[0],[],[-1,0,1]), colorbar % plot Bz
+xlabel ('x [m]'), ylabel ('y [m]'), zlabel ('z [m]'), title ('Bz [T]')
+view(3), axis equal, axis tight
+caxis([-0.5,0.5]*1e-5)
+
+
+% Plot some flux tubes
+figure(4), hold on, box on, grid on
+plot3(Gamma(:,1),Gamma(:,2),Gamma(:,3),'.-r') % plot filament
+[X0,Y0,Z0] = ndgrid(-1.5:0.5:1.5,-1.5:0.5:1.5,-2); % define tubes starting point
+htubes = streamtube(stream3(X,Y,Z,BX,BY,BZ,X0,Y0,Z0), [0.2 10]);
+xlabel ('x [m]'), ylabel ('y [m]'), zlabel ('z [m]'), title ('Some flux tubes')
+view(3), axis equal, axis tight
+set(htubes,'EdgeColor','none','FaceColor','c') % change tube color
+camlight left % change tube light
 
 
 
