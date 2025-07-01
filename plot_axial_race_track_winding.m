@@ -165,6 +165,7 @@ caxis([-0.5,0.5]*1e-5)
 
 
 % Plot some flux tubes
+%koordinatlar girilecek
 figure(4), hold on, box on, grid on
 plot3(Gamma(:,1),Gamma(:,2),Gamma(:,3),'.-r') % plot filament
 [X0,Y0,Z0] = ndgrid(-1.5:0.5:1.5,-1.5:0.5:1.5,-2); % define tubes starting point
