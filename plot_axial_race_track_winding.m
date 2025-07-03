@@ -10,10 +10,12 @@ clear all, close all, clc
 BSmag = BSmag_init(); % Initialize BSmag analysis
 
 %Get Machine Parameters
-machine_parameters;
+%machine_parameters;
+small_machine_parameters;
 
 %Get Wave Winding Coordinates
 axial_winding_coordinates;
+
 
 
 %BIOT SAVART MODEL SETTINGS
@@ -26,7 +28,7 @@ dGamma2 = 1e-2; % filament max discretization step [m]
 
 
 
-Npoles_radial = 8; % Number of modules to be simulated in the radial direction, default 8
+Npoles_radial =32; % Number of modules to be simulated in the radial direction, default 8
 
 %Create stack coils 
 % !!!
@@ -78,39 +80,39 @@ end
 
 %End Winding Coil Loops
 
-for n = 1:( Npoles_radial/2)  % Add end windings on one side with half of the pole number per module * module number
-
-%rotation angle per end winding over Z-axis
-rotation_angle = (2*(n-1) + 0.5) * machine.pole_angle;
-
-%Rotate initial end winding coordinates
-end_winding_coordinates_rotated = end_winding_coordinates;
-
-%rotation angle
-end_winding_coordinates_rotated(:,1) = end_winding_coordinates(:,1)*cosd(rotation_angle) - end_winding_coordinates(:,2)*sind(rotation_angle);
-end_winding_coordinates_rotated(:,2) = end_winding_coordinates(:,2)*cosd(rotation_angle) + end_winding_coordinates(:,1)*sind(rotation_angle);
-
-%Add End Winding Coil
-[BSmag] = BSmag_add_filament(BSmag,end_winding_coordinates_rotated,I,dGamma2);
-
-%add the other end coil (mirror over the Z-axis)
-end_winding_coordinates_rotated(:,3) = -1 * end_winding_coordinates_rotated(:,3);     % Take symmetry over X-Y plane, by multlipying Z coordinate by -1
-[BSmag] = BSmag_add_filament(BSmag,end_winding_coordinates_rotated,I,dGamma2);
-
-end
+% for n = 1:( Npoles_radial/2)  % Add end windings on one side with half of the pole number per module * module number
+% 
+% %rotation angle per end winding over Z-axis
+% rotation_angle = (2*(n-1) + 0.5) * machine.pole_angle;
+% 
+% %Rotate initial end winding coordinates
+% end_winding_coordinates_rotated = end_winding_coordinates;
+% 
+% %rotation angle
+% end_winding_coordinates_rotated(:,1) = end_winding_coordinates(:,1)*cosd(rotation_angle) - end_winding_coordinates(:,2)*sind(rotation_angle);
+% end_winding_coordinates_rotated(:,2) = end_winding_coordinates(:,2)*cosd(rotation_angle) + end_winding_coordinates(:,1)*sind(rotation_angle);
+% 
+% %Add End Winding Coil
+% [BSmag] = BSmag_add_filament(BSmag,end_winding_coordinates_rotated,I,dGamma2);
+% 
+% %add the other end coil (mirror over the Z-axis)
+% end_winding_coordinates_rotated(:,3) = -1 * end_winding_coordinates_rotated(:,3);     % Take symmetry over X-Y plane, by multlipying Z coordinate by -1
+% [BSmag] = BSmag_add_filament(BSmag,end_winding_coordinates_rotated,I,dGamma2);
+% 
+% end
 
 
 % Field points (where we want to calculate the field)
 
 %Solution Space 
-R_min = 2.2;  %Solution space inner radius
-R_max = 3; %Solution space outer space
+R_min = 0;  %Solution space inner radius
+R_max = 1; %Solution space outer space
 
 angle_offset = 0; %Solution space starting point
-angle_span = 24; % Solution angle span (degrees)
+angle_span = 360; % Solution angle span (degrees)
 
-data_point_angle= 20;  % number of data points in the tangential directions (through angle)
-data_point_radius = 10; %number of data points in the radial (radius) direction
+data_point_angle= 180;  % number of data points in the tangential directions (through angle)
+data_point_radius = 20; %number of data points in the radial (radius) direction
 
 r_M = linspace (R_min,R_max, data_point_radius+1);
 angle_M = linspace (angle_offset,angle_offset + angle_span, data_point_angle+1);
@@ -126,10 +128,10 @@ Z_M = zeros(data_point_radius+1,data_point_angle+1); % z [m] %data sirasini kont
 
 
 %BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % shows the field points plane
-
+tic
 % Biot-Savart Integration
 [BSmag,X,Y,Z,BX,BY,BZ] = BSmag_get_B(BSmag,X_M,Y_M,Z_M);
-
+toc
 BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % -> shows the field point line
 
 
@@ -146,9 +148,9 @@ xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
 
 
 % Field points (where we want to calculate the field)
-x_M = linspace(2,3,21); % x [m]
-y_M = linspace(0,1.2,22); % y [m]
-z_M = linspace(-0.2,0.2,23); % z [m]
+x_M = linspace(-0.5,0.5,21); % x [m]
+y_M = linspace(-0.5,0.5,22); % y [m]
+z_M = linspace(-0.5,0.5,23); % z [m]
 [X_M,Y_M,Z_M]=meshgrid(x_M,y_M,z_M);
 BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % shows the field points volume
 % Biot-Savart Integration

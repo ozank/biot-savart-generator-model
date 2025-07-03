@@ -88,8 +88,9 @@ winding_coordinates((machine.Npole_per_module/2)*4+3,:) =    [HTS.R_bottom*cosd(
 %Refer to Figure
 
 end_winding_gap = 0.1;   %choose a different parameter name Z distance from the wave winding
-end_winding_Z = 0.1;  %Degisitirilecek
+end_winding_Z = 0.5 *coil_to_coil_gap * machine.Nstacks +0.1 ;  %Degisitirilecek, kontrol et
 %Z icin diger fonskiyondan cagirilmasi lazim
+
 end_winding_coordinates = zeros (5,3);  %Initialize default matrix for coordinates of the end wave winding, 5 points
 
 

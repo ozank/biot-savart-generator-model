@@ -21,20 +21,21 @@
 
 %Independent Machine Parameters
 
-machine.Npole = 120;                        % Number of Poles
+machine.Npole = 32;                        % Number of Poles
 machine.pole_angle = 360 / machine.Npole;   % One pole pitch angle in degrees
 
 %Number of axial stacks
-machine.Nstacks = 3; % Number of generator stator stacks in the axial direction
+machine.Nstacks = 3; % Number of stator stacks
 
 coil_to_coil_gap = 0.1; %ignoring coil thicknes, mid plane of the coils should be considered
 
-% Main Radius Definitions
-HTS.R_mean = 2525/1000;     %meter, Mean radius of the HTS rotor
 
-HTS.R_outer = 2690/1000;    %meter, Outer radius of the HTS rotor (dependent, to be adjusted)
-HTS.R_inner = 2360/1000;    %meter, Inner radius of the HTS rotor (dependent, to be adjusted)
-HTS.R_bottom = 2000/1000;   %meter, Bottom radius of the HTS rotor (dependent, to be adjusted)
+% Main Radius Definitions
+HTS.R_mean = 300/1000;     %meter, Mean radius of the HTS rotor
+
+HTS.R_outer = 400/1000;    %meter, Outer radius of the HTS rotor (dependent, to be adjusted)
+HTS.R_inner = 200/1000;    %meter, Inner radius of the HTS rotor (dependent, to be adjusted)
+HTS.R_bottom = 50/1000;   %meter, Bottom radius of the HTS rotor (dependent, to be adjusted)
 
 %HTS Parameters and Excitation Current
 HTS.current = 225; %A   HTS Coil Current (DC), per tape

@@ -13,7 +13,7 @@
 %
 
 %Coil Angle, to be conencted to other machine parameters
-coil_angle = 2.5;
+coil_angle = machine.pole_angle*0.9;
 
 % Axial Adjustment of Rotor Coils
 coil_Z_offset = 0; % coil is placed on X-Y plane, coil Z offset defines Z coordinate

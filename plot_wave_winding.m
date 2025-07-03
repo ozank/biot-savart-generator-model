@@ -10,7 +10,8 @@ clear all, close all, clc
 BSmag = BSmag_init(); % Initialize BSmag analysis
 
 %Get Machine Parameters
-machine_parameters;
+%machine_parameters;
+small_machine_parameters;
 
 %Get Wave Winding Coordinates
 wave_winding_coordinates;
@@ -26,15 +27,12 @@ dGamma2 = 1e-2; % filament max discretization step [m]
 
 
 
-Nmodules_radial = 3; % Number of modules to be simulated in the radial direction, default 3
+Coil_z_min = -0.5 *coil_to_coil_gap * machine.Nstacks %minimum coil z(-) for the outer stack
+
+Nmodules_radial = 4; % Number of modules to be simulated in the radial direction, default 3
 
 %Create stack coils 
 % coils are placed symmetrically around Z-axis
-Coil_z_min = -0.5 *coil_to_coil_gap * machine.Nstacks %minimum coil z(-) for the outer stack
-
-% !!!
-%needs to be defined according to independent machine parameters!
-coil_to_coil_gap = 0.1; %ignoring coil thicknes, mid plane of the coils should be considered
 
 for s = 1:machine.Nstacks+1 %Create machine.Nstacks+1 number of coils in the axial direction, midplane Z=0
 
@@ -91,14 +89,14 @@ end
 % Field points (where we want to calculate the field)
 
 %Solution Space 
-R_min = 0;  %Solution space inner radius
-R_max = 3; %Solution space outer space
+R_min = 0.1;  %Solution space inner radius
+R_max = 1.5; %Solution space outer space
 
-angle_offset = 24; %Solution space starting point
-angle_span = 24; % Solution angle span (degrees)
+angle_offset = 0; %Solution space starting point
+angle_span = 360; % Solution angle span (degrees)
 
-data_point_angle= 20;  % number of data points in the tangential directions (through angle)
-data_point_radius = 10; %number of data points in the radial (radius) direction
+data_point_angle= 180;  % number of data points in the tangential directions (through angle)
+data_point_radius = 50; %number of data points in the radial (radius) direction
 
 r_M = linspace (R_min,R_max, data_point_radius+1);
 angle_M = linspace (angle_offset,angle_offset + angle_span, data_point_angle+1);
@@ -114,18 +112,21 @@ Z_M = zeros(data_point_radius+1,data_point_angle+1); % z [m] %data sirasini kont
 
 
 %BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % shows the field points plane
-
+tic
 % Biot-Savart Integration
 [BSmag,X,Y,Z,BX,BY,BZ] = BSmag_get_B(BSmag,X_M,Y_M,Z_M);
+toc
 
-BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % -> shows the field point line
+%BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % -> shows the field point line
 
 
 % Plot B/|B|
 figure(1)
     normB=sqrt(BX.^2+BY.^2+BZ.^2);
     %quiver3(X,Y,Z,BX./normB,BY./normB,BZ./normB,'r')
-    quiver3(X,Y,Z,BX,BY,BZ,'r')
+    %quiver3(X,Y,Z,BX,BY,BZ,'r')
+     contourf(X, Y, BZ), colorbar
+xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
 
 % Plot Bz on the plane
 figure(2), hold on, box on, grid on
