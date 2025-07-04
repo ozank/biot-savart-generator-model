@@ -43,12 +43,9 @@ HTS.N_turns = 970; %    Number of turns of HTS coil (per layer)
 HTS.N_layers = 2;  %    Number of layers, default is 2
 
 
-
-
-
-
-
 %Wave Winding Shape Adjustments
+%Relatin can be defined for certain geometries such as paralel unequal
+%windings
 HTS.pole_outer_ratio = 1; %pole ratio of the outer pole edge, default to 1  0 < value < 2
 HTS.pole_inner_ratio = 1; %pole ratio of the outer pole edge, default to 1  0 < value < 2
 
