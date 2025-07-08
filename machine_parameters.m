@@ -70,6 +70,6 @@ stator.coil_width = 30/1000;    %meters, Width of the stator coil on one side
 stator.R_bending = 30/1000;     %meters, Bending radius of the stator coils at the four corners
 
 %Should be calculated according to dimensions
-%stator.R_outer
-%stator.R_inner
-%stator.R_mean
+stator.R_outer = HTS.R_outer;  %to be changed
+stator.R_inner = HTS.R_inner;  %to be changed
+stator.R_mean = HTS.R_mean;  %to be changed

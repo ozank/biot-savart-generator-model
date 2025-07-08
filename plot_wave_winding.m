@@ -10,8 +10,8 @@ clear all, close all, clc
 BSmag = BSmag_init(); % Initialize BSmag analysis
 
 %Get Machine Parameters
-%machine_parameters;
-small_machine_parameters;
+machine_parameters;
+%small_machine_parameters;
 
 %Get Wave Winding Coordinates
 wave_winding_coordinates;
@@ -29,7 +29,7 @@ dGamma2 = 1e-2; % filament max discretization step [m]
 
 Coil_z_min = -0.5 *coil_to_coil_gap * machine.Nstacks %minimum coil z(-) for the outer stack
 
-Nmodules_radial = 4; % Number of modules to be simulated in the radial direction, default 3
+Nmodules_radial = 3; % Number of modules to be simulated in the radial direction, default 3
 
 %Create stack coils 
 % coils are placed symmetrically around Z-axis
