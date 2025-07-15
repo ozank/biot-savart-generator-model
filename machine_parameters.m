@@ -34,7 +34,7 @@ machine.Nstacks = 3; % Number of generator stator stacks in the axial direction
 machine.Ncoil = machine.Npole * 3/4;        %Number of stator coils per stage, assumes 3/4 relation
 machine.Nphase = 3;                         %Number of phases, default to 3
 
-
+%% To me modified according to machine parameters
 coil_to_coil_gap = 0.1; %ignoring coil thicknes, mid plane of the coils should be considered
 
 % Main Radius Definitions
@@ -49,6 +49,9 @@ HTS.R_bottom = 2000/1000;   %meter, Bottom radius of the HTS rotor (dependent, t
 HTS.current = 225; %A   HTS Coil Current (DC), per tape
 HTS.N_turns = 970; %    Number of turns of HTS coil (per layer)
 HTS.N_layers = 2;  %    Number of layers, default is 2
+
+%Define the total current for biot savart conductor
+I = HTS.current * HTS.N_turns * HTS.N_layers; %[A] filament current in the biot savart model
 
 
 %Wave Winding Shape Adjustments

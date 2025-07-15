@@ -26,7 +26,7 @@ machine.pole_angle = 360 / machine.Npole;   % One pole pitch angle in degrees
 
 %Number of axial stacks
 machine.Nstacks = 3; % Number of stator stacks
-
+%% To me modified according to machine parameters
 coil_to_coil_gap = 0.1; %ignoring coil thicknes, mid plane of the coils should be considered
 
 
@@ -42,6 +42,8 @@ HTS.current = 225; %A   HTS Coil Current (DC), per tape
 HTS.N_turns = 970; %    Number of turns of HTS coil (per layer)
 HTS.N_layers = 2;  %    Number of layers, default is 2
 
+%Define the total current for biot savart conductor
+I = HTS.current * HTS.N_turns * HTS.N_layers; %[A] filament current in the biot savart model
 
 %Wave Winding Shape Adjustments
 %Relatin can be defined for certain geometries such as paralel unequal

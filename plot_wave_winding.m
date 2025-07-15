@@ -5,31 +5,9 @@
 %  REQUIRED:  BSmag Toolbox 20150407 (for magnetic field calculations)
 %----------------------------------------------------
 
-% Initialize Biot Savart Model
-clear all, close all, clc
-BSmag = BSmag_init(); % Initialize BSmag analysis
 
-%Get Machine Parameters
-machine_parameters;
-%small_machine_parameters;
-
-%Get Wave Winding Coordinates
-wave_winding_coordinates;
-
-
-%BIOT SAVART MODEL SETTINGS
-
-%Define the total current for biot savart conductor
-I = HTS.current * HTS.N_turns * HTS.N_layers; %[A] filament current
-
-%Discrete steps along coil during, biot savart calculations
-dGamma2 = 1e-2; % filament max discretization step [m]  
-
-
-
-Coil_z_min = -0.5 *coil_to_coil_gap * machine.Nstacks %minimum coil z(-) for the outer stack
-
-Nmodules_radial = 3; % Number of modules to be simulated in the radial direction, default 3
+% coils are placed symmetrically around Z-axis
+Coil_z_min = -0.5 *coil_to_coil_gap * machine.Nstacks; %minimum coil z(-) for the outer stack
 
 %Create stack coils 
 % coils are placed symmetrically around Z-axis
@@ -39,9 +17,6 @@ for s = 1:machine.Nstacks+1 %Create machine.Nstacks+1 number of coils in the axi
 winding_coordinates_stack = winding_coordinates;
 
 winding_coordinates_stack(:,3) = Coil_z_min + (s-1)*coil_to_coil_gap; %z coordinate of -z stack
-
-%[BSmag] = BSmag_add_filament(BSmag,winding_coordinates_stack,I2,dGamma2);
-
 
 % 2D Rotation about a point
 % https://academo.org/demos/rotation-about-point/
@@ -56,7 +31,6 @@ winding_coordinates_rotated(:,2) = winding_coordinates(:,2)*cosd(rotation_angle)
 
 %add rotated coils ( on the + z axis)
 [BSmag] = BSmag_add_filament(BSmag,winding_coordinates_rotated,I,dGamma2);
-
 
 end
 
@@ -84,54 +58,3 @@ end_winding_coordinates_rotated(:,3) = -1 * end_winding_coordinates_rotated(:,3)
 [BSmag] = BSmag_add_filament(BSmag,end_winding_coordinates_rotated,I,dGamma2);
 
 end
-
-
-% Field points (where we want to calculate the field)
-
-%Solution Space 
-R_min = 0.1;  %Solution space inner radius
-R_max = 1.5; %Solution space outer space
-
-angle_offset = 0; %Solution space starting point
-angle_span = 360; % Solution angle span (degrees)
-
-data_point_angle= 180;  % number of data points in the tangential directions (through angle)
-data_point_radius = 50; %number of data points in the radial (radius) direction
-
-r_M = linspace (R_min,R_max, data_point_radius+1);
-angle_M = linspace (angle_offset,angle_offset + angle_span, data_point_angle+1);
-
-%create polar coordinate points
-%[X_M,Y_M] = ndgrid(x_M,y_M);
-[R_M,ANGLE_M] = ndgrid(r_M,angle_M * (pi()/180));
-
-
-[X_M,Y_M] = pol2cart(ANGLE_M,R_M);
-Z_M = zeros(data_point_radius+1,data_point_angle+1); % z [m] %data sirasini kontrol et
-
-
-
-%BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % shows the field points plane
-tic
-% Biot-Savart Integration
-[BSmag,X,Y,Z,BX,BY,BZ] = BSmag_get_B(BSmag,X_M,Y_M,Z_M);
-toc
-
-%BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % -> shows the field point line
-
-
-% Plot B/|B|
-figure(1)
-    normB=sqrt(BX.^2+BY.^2+BZ.^2);
-    %quiver3(X,Y,Z,BX./normB,BY./normB,BZ./normB,'r')
-    %quiver3(X,Y,Z,BX,BY,BZ,'r')
-     contourf(X, Y, BZ), colorbar
-xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
-
-% Plot Bz on the plane
-figure(2), hold on, box on, grid on
-    contourf(X, Y, BZ), colorbar
-xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
-
-
-
