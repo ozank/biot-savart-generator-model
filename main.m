@@ -29,22 +29,22 @@ machine_parameters;      %large machine parameters
 % WAVE WINDING
 %Get Wave Winding Coordinates
 % comment out below for wave winding coil
-wave_winding_coordinates;
+%wave_winding_coordinates;
 
-Nmodules_radial = 3; % Number of modules to be simulated in the radial direction, default 3
+%Nmodules_radial = 3; % Number of modules to be simulated in the radial direction, default 3
 
 % Add windings for the wave winding
-plot_wave_winding;
+%plot_wave_winding;
 
 % RACE TRACK COIL WINDING
 %Get Race track axial machine Winding Coordinates 
 % comment out below for race track coil
 
-% axial_winding_coordinates;
-% Npoles_radial =32; % Number of modules to be simulated in the radial direction, default 8
+ axial_winding_coordinates;
+ Npoles_radial = 16; % Number of modules to be simulated in the radial direction, default 8
 
 % Add windings for the axial race track winding
-% plot_axial_race_track_winding;
+ plot_axial_race_track_winding;
 
 %% Biot Savart Calculation Space Definitions
 % Field points (where we want to calculate the field)
@@ -56,7 +56,7 @@ R_max = 3; %Solution space outer space
 angle_offset = 0; %Solution space starting point
 angle_span = 24; % Solution angle span (degrees)
 
-data_point_angle= 18;  % number of data points in the tangential directions (through angle)
+data_point_angle= 20;  % number of data points in the tangential directions (through angle)
 data_point_radius = 10; %number of data points in the radial (radius) direction
 
 r_M = linspace (R_min,R_max, data_point_radius+1);
@@ -67,28 +67,27 @@ angle_M = linspace (angle_offset,angle_offset + angle_span, data_point_angle+1);
 
 %Convert from polar coordinates to cartesian points
 [X_M,Y_M] = pol2cart(ANGLE_M,R_M);
-Z_M = zeros(data_point_radius+1,data_point_angle+1); % z [m] 
+Z_M = zeros(data_point_radius+1,data_point_angle+1)+0.3; % z [m] 
 
 %% BIOT SAVART ANALYSIS RUN
 
 % Biot-Savart Integration
 [BSmag,X,Y,Z,BX,BY,BZ] = BSmag_get_B(BSmag,X_M,Y_M,Z_M);
 
-%BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % -> shows the field point line
+BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % -> shows the field point line
 
 % Plot B/|B|
 figure(1)
     normB=sqrt(BX.^2+BY.^2+BZ.^2);
     %quiver3(X,Y,Z,BX./normB,BY./normB,BZ./normB,'r')
-    %quiver3(X,Y,Z,BX,BY,BZ,'r')
-     contourf(X, Y, BZ), colorbar
+    quiver3(X,Y,Z,50*BX,50*BY,50*BZ,'b')
 xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
 
 
 % Plot Bz on the plane
-figure(2), hold on, box on, grid on
-    contourf(X, Y, BZ), colorbar
-xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
+%figure(2), hold on, box on, grid on
+%    contourf(X, Y, BZ), colorbar
+%xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
 
 % %Other Plot Options for Reserve
 % 

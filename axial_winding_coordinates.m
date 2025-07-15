@@ -12,9 +12,6 @@
 %       Race track coil parameters and coordinate references required (please see the generator documentation for parameter details
 %
 
-%Coil Angle, to be conencted to other machine parameters
-coil_angle = machine.pole_angle*0.9;
-
 % Axial Adjustment of Rotor Coils
 coil_Z_offset = 0; % coil is placed on X-Y plane, coil Z offset defines Z coordinate
 
@@ -77,11 +74,6 @@ winding_coordinates(5,:) =  [   R * cosd(angle),
 
 %CREATE END WINDING SINGLE COIL COORDINATES
 
-%Refer to Figure
-
-end_winding_gap = 0.1;   %choose a different parameter name Z distance from the wave winding
-end_winding_Z = 0.2;  %Degisitirilecek
-%Z icin diger fonskiyondan cagirilmasi lazim
 end_winding_coordinates = zeros (5,3);  %Initialize default matrix for coordinates of the end wave winding, 5 points
 
 
@@ -104,7 +96,7 @@ end_winding_coordinates(2,:) =  [   R,
 
 %pointC
 %Outer radius, outer edge of the end winding
-angle = machine.pole_angle;
+angle = coil_angle;
 R = HTS.R_outer;
 
 end_winding_coordinates(3,:) =  [   R * cosd(angle),
@@ -114,7 +106,7 @@ end_winding_coordinates(3,:) =  [   R * cosd(angle),
 
 %pointD
 %Inner radius, outer edge of the end winding
-angle = machine.pole_angle;
+angle = coil_angle;
 R = HTS.R_inner;
 
 end_winding_coordinates(4,:) =  [   R * cosd(angle),
