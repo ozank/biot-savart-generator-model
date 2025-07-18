@@ -84,6 +84,7 @@ stator.R_mean = HTS.R_mean;  %to be changed
 %End Winding Coordinates
 % To be modified!
 %Refer to Figure
+end_winding_rotation_angle= 45;
 
 end_winding_gap = 0.1;   %choose a different parameter name Z distance from the wave winding
 end_winding_Z = 0.5 *coil_to_coil_gap * machine.Nstacks +0.1 ;  %Degisitirilecek, kontrol et

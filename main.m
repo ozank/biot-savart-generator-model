@@ -6,7 +6,7 @@
 %----------------------------------------------------
 
 %% Initialize Biot Savart Model
-%clear all, close all, clc
+clear all, close all, clc
 BSmag = BSmag_init(); % Initialize BSmag analysis
 
 %BIOT SAVART MODEL SETTINGS
@@ -41,8 +41,8 @@ machine_parameters;      %large machine parameters
 % comment out below for race track coil
 
  axial_winding_coordinates;
- Npoles_radial = 120; % Number of modules to be simulated in the radial direction, default 8
- end_winding_rotation_angle= 45;
+ Npoles_radial = 12; % Number of modules to be simulated in the radial direction, default 8
+ %end_winding_rotation_angle= 45;
 
 % Add windings for the axial race track winding
  plot_axial_race_track_winding;
@@ -82,8 +82,8 @@ Z_max = 0.4; %Solution space maximum Z point
 angle_offset = 6; %Solution space starting point
 angle_span = 12; % Solution angle span (degrees)
 
-data_point_angle= 50;  % number of data points in the tangential directions (through angle)
-data_point_radius = 100; %number of data points in the Z direction
+data_point_angle= 25;  % number of data points in the tangential directions (through angle)
+data_point_radius = 50; %number of data points in the Z direction
 
 r_M = linspace (R, R, data_point_radius+1);  %Constant R values
 angle_M = linspace (angle_offset,angle_offset + angle_span, data_point_angle+1);
@@ -100,26 +100,26 @@ Z_M = repmat(z_M,  data_point_angle+1,1)';
 %% BIOT SAVART ANALYSIS RUN
 
 % Biot-Savart Integration
-[BSmag,X,Y,Z,BX,BY,BZ] = BSmag_get_B(BSmag,X_M,Y_M,Z_M);
-
-%BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % -> shows the field point line
-
-% Plot B/|B|
-figure(1)
-    normB=sqrt(BX.^2+BY.^2+BZ.^2);
-    %quiver3(X,Y,Z,BX./normB,BY./normB,BZ./normB,'r')
-    quiver3(X,Y,Z,BX./normB,BY./normB,BZ./normB,1,'b')
-    % hold on
- %contour(X,Z,normB)
- axis equal
-% hold off
-xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
+% [BSmag,X,Y,Z,BX,BY,BZ] = BSmag_get_B(BSmag,X_M,Y_M,Z_M);
+% 
+% %BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % -> shows the field point line
+% 
+% % Plot B/|B|
+% figure(1)
+%     normB=sqrt(BX.^2+BY.^2+BZ.^2);
+%     %quiver3(X,Y,Z,BX./normB,BY./normB,BZ./normB,'r')
+%     quiver3(X,Y,Z,BX./normB,BY./normB,BZ./normB,1,'b')
+%     % hold on
+%  %contour(X,Z,normB)
+%  axis equal
+% % hold off
+% xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
 % 
 % 
 % Plot Bz on the plane
-figure(2), hold on, box on, grid on
-    contourf(R_M.*sin(ANGLE_M), Z, sqrt(BX.^2+BY.^2+BZ.^2)), colorbar
-xlabel ('x [m]'), ylabel ('y [m]'), title ('Bmag [T]')
+% figure(2), hold on, box on, grid on
+%     contourf(R_M.*sin(ANGLE_M), Z, sqrt(BX.^2+BY.^2+BZ.^2)), colorbar
+% xlabel ('x [m]'), ylabel ('y [m]'), title ('Bmag [T]')
 % 
 % 
 % % Plot Bz on the plane
