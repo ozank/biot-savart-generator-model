@@ -1,13 +1,31 @@
+%---------------------------------------------------
+%  NAME:      Calculate Flux Per Pole .m
+%  WHAT:      For machine sizing problems, calculate the flux per pole according to 
+% machine parameters, will be used for induced voltage calculations for the stator
+%  AUTHOR:    Ozan Keysan (07/2025)
+%----------------------------------------------------
+% 
+%   Inputs:
+%       Main function and motor dimensions
+% 
+%   Outputs:
+%       Maximum flux per pole for one stator coil (when stator coil is aligned
+% with the HTS field winding
+%
+
+% Call the main function to draw the coils according to machine dimensions
 main;
 
-%Calculate Flux Per Pole
-
+%% Modify Stator Dimensions (can be kept same)
 stator.R_outer = HTS.R_outer+0.1;  %to be changed
 stator.R_inner = HTS.R_inner-0.1;  %to be changed
 stator.R_mean = HTS.R_mean;  %to be changed
 
 
+
 %Model to model Single Filament Stator Coil Model
+% Stator winding is approximated by single filament passing through the
+% mid-point of the stator
 
 %Stator Winding Filament Polar Coordinates(Integral Surface coordinates)
 filament.R_inner = stator.R_inner + 0.5 * stator.coil_width;    %Filament modelling Inner Radius
@@ -16,7 +34,6 @@ filament.R_outer = stator.R_outer - 0.5 * stator.coil_width;    %Filament modell
 %Stator Coil  Span Angle 
 stator.coil_angle = 360 / machine.Ncoil;   % One stator coil pole pitch angle in degrees
 stator.coil_pitch = stator.R_mean * (stator.coil_angle *pi() /180); %Coil pitch at mean radius
-
 
 %Solution Space Settings 
 angle_offset = 2* machine.pole_angle; %Solution space starting point (0 point is the aligned position with the axis)
@@ -43,9 +60,7 @@ d_R = (filament.R_outer -filament.R_inner)/(data_point_radius -1); % [meters], d
 d_ANGLE = filament.span_angle / (data_point_angle -1);  % [degrees], delta angle between two data points, required for integral operation 
 
 
-
 r_M = linspace (filament.R_inner + 0.5*d_R ,filament.R_outer-0.5*d_R, data_point_radius-1);      %Radius(m), points for polar coordinates
-
 
 %cropped solution space
 angle_M = linspace (filament.angle_min + 0.5*d_ANGLE, ...
@@ -63,13 +78,14 @@ Z_M = zeros(size(X_M)); % z [m] %equal size with X_M
 
 
 BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % shows the field points plane
-tic
+
 % Biot-Savart Integration
 [BSmag,X,Y,Z,BX,BY,BZ] = BSmag_get_B(BSmag,X_M,Y_M,Z_M);
-toc
+
 %BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % -> shows the field point line
 
-%Calculate Flux Linkage (Bz, surface integral over polar coordinates)
+%% Calculate Flux Linkage
+% (Bz, surface integral over polar coordinates)
 %https://math.stackexchange.com/questions/145939/simple-proof-of-integration-in-polar-coordinates
 
 flux = sum (BZ .* R_M *d_R * d_ANGLE*(pi/180), "all")   % int (Bz.dA) in polar coordinates

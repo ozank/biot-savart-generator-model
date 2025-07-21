@@ -1,5 +1,5 @@
 %---------------------------------------------------
-%  NAME:      Axıal Winding Coordinates.m
+%  NAME:      Axial Winding Coordinates.m
 %  WHAT:      Defines the initial coordinates and variables for the
 %  conventional axial winding (trapezoidal) HTSAAM machine
 %  AUTHOR:    Ozan Keysan (06/2025)
@@ -13,7 +13,7 @@
 %
 
 % Axial Adjustment of Rotor Coils
-coil_Z_offset = 0; % coil is placed on X-Y plane, coil Z offset defines Z coordinate
+coil_Z_offset = 0; % coil is placed on X-Y plane, coil Z offset defines Z coordinate, default to zero
 
 
 %CREATE TRAPEZOIDAL WINDING DIMENSIONS

@@ -1,3 +1,6 @@
+% Trial Code for Variable End Winding Angle
+% Changes the end winding angle in a foor loop to check its effect
+
 %rotation_angle = 45;
 
 tic
@@ -42,11 +45,4 @@ close;
 end
 
 toc
-
-% % Plot Bz on the plane
-% figure(2), hold on, box on, grid on
-%     contourf(R_M.*sin(ANGLE_M), Z, sqrt(BX.^2+BY.^2+BZ.^2)), colorbar
-% xlabel ('x [m]'), ylabel ('y [m]'), title ('Bmag [T]')
-% axis equal
-
 
