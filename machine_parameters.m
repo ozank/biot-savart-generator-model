@@ -27,8 +27,9 @@ machine.f_electrical = (machine.Nrpm /60)* (machine.Npole/2);   %Machine induced
 %Number of axial stacks
 machine.Nstacks = 3; % Number of generator stator stacks in the axial direction
 
-machine.Ncoil = machine.Npole * 3/4;        %Number of stator coils per stage, assumes 3/4 relation
+stator.Ncoil = machine.Npole * 3/4;        %Number of stator coils per stage, assumes 3/4 relation
 machine.Nphase = 3;                         %Number of phases, default to 3
+stator.Ncoil_per_phase = stator.Ncoil / machine.Nphase;  %Number of stator coils per phase (per axial stack)
 
 %% Mechanical (Radius) Parameters
 
@@ -61,12 +62,16 @@ I = HTS.current * HTS.N_turns * HTS.N_layers; %[A] filament current in the biot 
 
 %% Stator Coil Parameters
 
-stator.N_turns = 1;             %Number of turns in a single stator coil
+stator.N_turns = 100;             %Number of turns in a single stator coil
 stator.coil_length = 300/1000;  %meters, Straight section length of the stator coils, independent but correlated with HTS.coil_length, stator.R_inner, Stator.R_outer
-stator.Nparalel = 1;            %Number of paralel connected stator winding coils per phase
-stator.coil_thickness = 30/1000;%meters, Thickness of single stator coil
+stator.Nparalel = 1;            %Number of paralel connected stator winding coils per phase (default to 1)
+stator.Nseries = stator.Ncoil_per_phase/stator.Nparalel;  %Number of series connected stator winding per phase 
+
+% Current Density & Fill Factor
+stator.current_density = 7;    %[A/mm^2, RMS], Current density in stator windings
 stator.fill_factor = 0.6;       %Fill factor (independent or calculated according to stator coil cross section area)
 
+stator.coil_thickness = 30/1000;%meters, Thickness of single stator coil
 stator.coil_width = 30/1000;    %meters, Width of the stator coil on one side
 stator.R_bending = 30/1000;     %meters, Bending radius of the stator coils at the four corners
 
