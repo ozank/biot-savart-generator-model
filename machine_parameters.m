@@ -103,17 +103,13 @@ HTS.coil_thickness = (HTS.tape_width * HTS.N_layers) + HTS.gap_pancake; %[m] coi
 HTS.R_outer = HTS.R_mean + 0.5 * HTS.coil_length + HTS.coil_width; %[m], HTS Outer radius, similar calculation to stator
 HTS.R_inner = HTS.R_mean - 0.5 * HTS.coil_length - HTS.coil_width; %[m], HTS Inner radius, similar calculation to stator
 
-%Only for the wave winding type machine, radius of the wave winding bottom
-%return path 
-%to be adjusted!
-HTS.R_bottom = HTS.R_inner - 0.3;   %meter, Bottom radius of the HTS rotor for wave winding (to be adjusted)
 
 %% Air Gap, Axial Gap, Cryostat Thickness
 machine.airgap_mechanical = 10/1000; %[m], mechanical airgap between stator and rotor
 machine.airgap_cryostat = 10/1000; %[m], Gap required for cryostat, includes vacuum thickness in axial length, and the thicknes of the cryostat in axial direction (if exists): HTS surface to mechanical gap starting point
 machine.airgap_magnetic = machine.airgap_cryostat + machine.airgap_mechanical; %[m] Magnetic airgap (i.e. HTS surface to stator coil surface, depends on cryostat dimensions and mechanical airgap)
 
-machine.airgap_HTS_to_HTS = 2 * machine.airgap_magnetic + stator.coil_thickness; %[m], Axial distance between to HTS coil surfaces
+machine.airgap_HTS_to_HTS = 2 * machine.airgap_magnetic + stator.coil_thickness; %[m], Axial distance between to HTS coil surfaces between stacks (axial direction)
 
 % To me modified according to machine parameters
 %TO be removed, coil thickness should be considered!!
@@ -132,6 +128,11 @@ HTS.pole_outer_ratio = 1; %pole ratio of the outer pole edge, default to 1  0 < 
 HTS.pole_inner_ratio = 1; %pole ratio of the outer pole edge, default to 1  0 < value < 2
 
 machine.Npole_per_module = 8; %Number of poles per cryostat module, default to 8, should be an even number
+
+%Only for the wave winding type machine, radius of the wave winding bottom
+%return path 
+%TO BE ADJUSTED!
+HTS.R_bottom = HTS.R_inner - 0.3;   %meter, Bottom radius of the HTS rotor for wave winding (to be adjusted)
 
 
 %% End Winding Coordinates
