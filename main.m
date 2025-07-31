@@ -18,6 +18,10 @@ dGamma2 = 1e-2; % filament max discretization step [m], default to 1 cm
 %% Get Machine Parameters
 machine_parameters;      %large machine parameters
 
+%% Get Material Properties
+material_constants; % Load material constants
+
+
 %% Get Winding coordinates
 
 % It is possible to draw two types of windings: Wave winding and

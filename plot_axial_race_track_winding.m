@@ -96,7 +96,7 @@ end_winding_coordinates_rotated(:,3) = end_winding_coordinates_temp(:,3)*cosd(en
 end_winding_coordinates_rotated(:,3) = end_winding_coordinates_rotated(:,3) + (min(end_winding_coordinates(:,3))-min(end_winding_coordinates_rotated(:,3)));
 
 %radially rotate so that aligned with the coils in the stacks
-rotation_angle2 = (2*n-1) * machine.pole_angle + 0.5*(machine.pole_angle-coil_angle); % ;
+rotation_angle2 = (2*n-1) * machine.pole_angle + 0.5*(machine.pole_angle-filament_HTS.coil_angle); % ;
 
 %Rotate initial end winding coordinates
 end_winding_coordinates_temp = end_winding_coordinates_rotated;
@@ -134,7 +134,7 @@ end_winding_coordinates_rotated(:,3) = end_winding_coordinates_temp(:,3)*cosd(-e
 end_winding_coordinates_rotated(:,3) = end_winding_coordinates_rotated(:,3) + (min(end_winding_coordinates(:,3))-min(end_winding_coordinates_rotated(:,3)));
 
 %rotate so that aligned with the coils in the stacks
-rotation_angle2 = (2*n-1) * machine.pole_angle - 0.5*(machine.pole_angle-coil_angle); % ;
+rotation_angle2 = (2*n-1) * machine.pole_angle - 0.5*(machine.pole_angle-filament_HTS.coil_angle); % ;
 
 %Rotate initial end winding coordinates
 end_winding_coordinates_temp = end_winding_coordinates_rotated;

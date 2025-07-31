@@ -39,7 +39,6 @@ stator.phase_resistance = (stator.coil_resistance * stator.Nseries ) / stator.Np
 %% Conduction (DC) Losses
 % calculates the power loss (I^2*Rdc) for one phase
 % can be moved to external function
-
 stator.P_conduction_loss_per_stage = machine.Nphase * stator.phase_current^2 * stator.phase_resistance; %[W] I^2Rdc per stage of the generator
 
 %% Eddy (AC) Losses

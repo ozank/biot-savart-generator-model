@@ -62,7 +62,7 @@ stator.Nseries = stator.Ncoil_per_phase/stator.Nparalel;  %Number of series conn
 stator.current_density = 7;    %[A/mm^2, RMS], Current density in stator windings
 stator.fill_factor = 0.6;       %Fill factor (independent or calculated according to stator coil cross section area)
 
-%% Stator Coil Width and height calculations
+%% Stator Coil Width and Height Calculations
 stator.coil_width_to_coil_pitch_ratio = 0.4;  %Coil width to pole pitch ratio (at mean radius), <0.5 but considering inner radius 0.45 is a more realistic limit
 
 stator.coil_angle = 360 / stator.Ncoil;   % One stator coil pole pitch angle in degrees
@@ -75,9 +75,7 @@ stator.coil_thickness = 30/1000;    %meters, Thickness of single stator coil
 stator.R_bending = 30/1000;     %meters, Bending radius of the stator coils at the four outer corners
 
 %% Stator Outer Inner Dimensions
-%Stator
-%Should be calculated according to dimensions (at the moment assumed same
-%with the rotor parameters)
+
 stator.R_outer = stator.R_mean + 0.5*stator.coil_length + stator.coil_width;  %Mean diameter plus half of straight section plus coil width
 stator.R_inner = stator.R_mean - 0.5*stator.coil_length - stator.coil_width;  %Mean diameter minus half of straight section minus coil width
 
@@ -89,7 +87,7 @@ HTS.tape_thickness = 0.2; %[mm] single HTS tape thickness
 %% HTS Coil Parameters, Rotor Outer Inner Dimensions
 %Secondary parameters
 HTS.pole_pitch = 2 * pi * HTS.R_mean / machine.Npole;  %[m] Magnetic pole pitch of the rotor HTS coils
-HTS.distance_to_next = 30/1000; %[m], distance between two adjacent HTS coils at mean radius
+HTS.distance_to_next = 10/1000; %[m], distance between two adjacent HTS coils at mean radius
 HTS.gap_pancake = 1/1000; %[m], Gap between two pancake coils of HTS, default to 1 mm
 
 HTS.coil_pitch = HTS.pole_pitch - HTS.distance_to_next; %[m] Coil pitch at mean radius of HTS coils
@@ -97,7 +95,7 @@ HTS.coil_width = HTS.tape_thickness * HTS.N_turns / 1000; %[m] Coil Width of the
 %Geometry check
 % HTS.coil_width < 0.5 *HTS.coil_pitch !!
 
-HTS.coil_thickness = (HTS.tape_width * HTS.N_layers) + HTS.gap_pancake; %[m] coil thickness (axial direction of HTS coil (double pancake))
+HTS.coil_thickness = (HTS.tape_width/1000 * HTS.N_layers) + HTS.gap_pancake; %[m] coil thickness (axial direction of HTS coil (double pancake))
 
 %will need to be defined with respect to other parameters (to be changed)
 HTS.R_outer = HTS.R_mean + 0.5 * HTS.coil_length + HTS.coil_width; %[m], HTS Outer radius, similar calculation to stator
@@ -111,17 +109,17 @@ machine.airgap_magnetic = machine.airgap_cryostat + machine.airgap_mechanical; %
 
 machine.airgap_HTS_to_HTS = 2 * machine.airgap_magnetic + stator.coil_thickness; %[m], Axial distance between to HTS coil surfaces between stacks (axial direction)
 
-% To me modified according to machine parameters
+% To be modified according to machine parameters
 %TO be removed, coil thickness should be considered!!
-coil_to_coil_gap = 0.1; %Z-direction ignoring coil thicknes, mid point of the coils should be considered
+coil_to_coil_gap = machine.airgap_HTS_to_HTS + HTS.coil_thickness; %[m], HTS filament to filament distance in the axial direction (between stacks)
+%coil_to_coil_gap = 0.1; %manual Z-direction ignoring coil thicknes(ie filament), mid point of the coils should be considered
 
 
 %% Race Track Coil Parameters
 %Coil Angle (ratio of coil width to pole pitch at the mean diameters
 % can be be connected to other machine parameters and name can be modified
 %TO BE REMOVED!!, moved to coordinate calculation function
-coil_angle = machine.pole_angle*0.8;
-
+HTS.coil_angle = (HTS.coil_pitch / HTS.pole_pitch) * machine.pole_angle; %[degrees], coil span angle considering the gaps between adjacent coils
 
 %% Wave Winding Shape Adjustments
 HTS.pole_outer_ratio = 1; %pole ratio of the outer pole edge, default to 1  0 < value < 2
