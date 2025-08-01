@@ -35,7 +35,7 @@ stator.Ncoil_per_phase = stator.Ncoil / machine.Nphase;  %Number of stator coils
 
 % Rotor
 % Mean radius (independent)
-HTS.R_mean = 2525/1000;     %meter, Mean radius of the HTS rotor
+HTS.R_mean = 3000/1000;     %meter, Mean radius of the HTS rotor
 HTS.coil_length = 300/1000;  %meters, Straight section length of rotor HTS coil
 %Outer and other parameters are calculated below using number of turns,
 %wire dimensions etc.
@@ -54,8 +54,8 @@ I = HTS.current * HTS.N_turns * HTS.N_layers; %[A] filament current in the biot 
 
 %% Stator Coil Parameters
 
-stator.N_turns = 100;             %Number of turns in a single stator coil
-stator.Nparalel = 1;            %Number of paralel connected stator winding coils per phase (default to 1)
+stator.N_turns = 75;             %Number of turns in a single stator coil
+stator.Nparalel = 2;            %Number of paralel connected stator winding coils per phase (default to 1)
 stator.Nseries = stator.Ncoil_per_phase/stator.Nparalel;  %Number of series connected stator winding per phase 
 
 % Current Density & Fill Factor
