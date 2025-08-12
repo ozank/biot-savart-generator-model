@@ -30,3 +30,8 @@ stator.conductor_area = stator.winding_area * stator.fill_factor / stator.N_turn
 stator.current_per_coil = stator.current_density * stator.conductor_area; %[Arms], current in the conductor of single coil
 
 stator.phase_current = stator.current_per_coil * stator.Nparalel; %[A,rms], phase current per phase (per axial stack) of machine
+
+%To be added
+%Litz wire configuration
+%number of strands per litz wire
+%litz fill factor

@@ -42,8 +42,13 @@ stator.phase_resistance = (stator.coil_resistance * stator.Nseries ) / stator.Np
 stator.P_conduction_loss_per_stage = machine.Nphase * stator.phase_current^2 * stator.phase_resistance; %[W] I^2Rdc per stage of the generator
 
 %% Eddy (AC) Losses
-% to be calculated according to B distribution and frequency
-%at the moment assumed same as DC conduction losses !!
+% Calculated according to the equations presented in:
+% Manolopoulos, C.D., et al.: Litz wire loss performance and optimization for cryogenic windings. 
+% IET Electr. Power Appl. 17(4), 487–498 (2023). https://doi.org/10.1049/elp2.12279 
+
+%Ptot = Prms + Pskin + Pprox
+%Equation(2) second term is neglected as it is too small if the litz wire
+%diameter is smaller than the skin depth
 
 stator.P_eddy_loss_per_stage = stator.P_conduction_loss_per_stage;   %to be changed
 

@@ -109,8 +109,6 @@ machine.airgap_magnetic = machine.airgap_cryostat + machine.airgap_mechanical; %
 
 machine.airgap_HTS_to_HTS = 2 * machine.airgap_magnetic + stator.coil_thickness; %[m], Axial distance between to HTS coil surfaces between stacks (axial direction)
 
-% To be modified according to machine parameters
-%TO be removed, coil thickness should be considered!!
 coil_to_coil_gap = machine.airgap_HTS_to_HTS + HTS.coil_thickness; %[m], HTS filament to filament distance in the axial direction (between stacks)
 %coil_to_coil_gap = 0.1; %manual Z-direction ignoring coil thicknes(ie filament), mid point of the coils should be considered
 
