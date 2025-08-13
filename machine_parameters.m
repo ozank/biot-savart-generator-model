@@ -59,8 +59,13 @@ stator.Nparalel = 2;            %Number of paralel connected stator winding coil
 stator.Nseries = stator.Ncoil_per_phase/stator.Nparalel;  %Number of series connected stator winding per phase 
 
 % Current Density & Fill Factor
-stator.current_density = 7;    %[A/mm^2, RMS], Current density in stator windings
-stator.fill_factor = 0.6;       %Fill factor (independent or calculated according to stator coil cross section area)
+stator.current_density = 7;    %[A/mm^2, RMS], Current density in stator windings (calculated in the conductor area)
+stator.fill_factor = 0.8;       %Fill factor (independent or calculated according to stator coil cross section area)
+
+%Litz Wire Parameters
+stator.Litz_N_strands = 50;   %Number of strands of the Litz wire, used for eddy/proximity loss calculations, a value of 50-200 seems enough for DD wind turbines
+stator.Litz_fill_factor = 1; % Ignored for now, the overall fill factor is included in the stator.fill_factor, can be separated later on
+
 
 %% Stator Coil Width and Height Calculations
 stator.coil_width_to_coil_pitch_ratio = 0.4;  %Coil width to pole pitch ratio (at mean radius), <0.5 but considering inner radius 0.45 is a more realistic limit

@@ -26,12 +26,13 @@ stator.induced_voltage_per_phase = stator.induced_voltage_per_coil * stator.Nser
 %% Phase Current Calculations
 
 stator.winding_area = stator.coil_thickness * stator.coil_width * 10^6; %[mm^2], stator winding area, cross section
-stator.conductor_area = stator.winding_area * stator.fill_factor / stator.N_turns; %[mm^2], stator conductor (per turn area)
+stator.conductor_area = stator.winding_area * stator.fill_factor * stator.Litz_fill_factor / stator.N_turns; %[mm^2], stator conductor (per turn area), if litz overall conductor area of the litz wire, not strand
 stator.current_per_coil = stator.current_density * stator.conductor_area; %[Arms], current in the conductor of single coil
 
 stator.phase_current = stator.current_per_coil * stator.Nparalel; %[A,rms], phase current per phase (per axial stack) of machine
 
-%To be added
-%Litz wire configuration
-%number of strands per litz wire
-%litz fill factor
+%Litz Wire Parameter Calculations
+stator.Litz_strand_diameter = 2 * sqrt((stator.conductor_area / stator.Litz_N_strands)/pi); % [mm], diameter of a single strand in the Litz wire, calculated from the area of single strand
+
+stator.Litz_wire_diameter = 2 * sqrt((stator.conductor_area/stator.Litz_fill_factor)/pi); %[mm], diameter of the Litz wire (with strands) including fill factor
+

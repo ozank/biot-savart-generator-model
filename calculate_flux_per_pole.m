@@ -93,6 +93,10 @@ BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % shows the field points plane
 
 flux = sum (BZ .* R_M *d_R * d_ANGLE*(pi/180), "all")   % int (Bz.dA) in polar coordinates
 
+%TO BE ADDED
+%Maximum flux density in the airgap to calculate the eddy current losses in
+%the stator
+
 % Plot Bz on the plane
 figure(2), hold on, box on, grid on
 contourf(X,Y, BZ), colorbar
