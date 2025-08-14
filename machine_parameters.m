@@ -45,8 +45,8 @@ stator.R_mean = HTS.R_mean;  %can be modified but by default, equal to rotor mea
 stator.coil_length = 300/1000;  %meters, Straight section length of the stator coils, independent but correlated with HTS.coil_length, stator.R_inner, Stator.R_outer
 
 %% Rotor HTS Parameters and Excitation Current
-HTS.current = 225; %A   HTS Coil Current (DC), per tape
-HTS.N_turns = 300; %    Number of turns of HTS coil (per layer)
+HTS.current = 550; %A   HTS Coil Current (DC), per tape
+HTS.N_turns = 150; %    Number of turns of HTS coil (per layer)
 HTS.N_layers = 2;  %    Number of layers, default is 2 for double pancake configurations
 
 %Define the total current for biot savart conductor
@@ -54,7 +54,7 @@ I = HTS.current * HTS.N_turns * HTS.N_layers; %[A] filament current in the biot 
 
 %% Stator Coil Parameters
 
-stator.N_turns = 75;             %Number of turns in a single stator coil
+stator.N_turns = 50;             %Number of turns in a single stator coil
 stator.Nparalel = 2;            %Number of paralel connected stator winding coils per phase (default to 1)
 stator.Nseries = stator.Ncoil_per_phase/stator.Nparalel;  %Number of series connected stator winding per phase 
 
@@ -108,7 +108,7 @@ HTS.R_inner = HTS.R_mean - 0.5 * HTS.coil_length - HTS.coil_width; %[m], HTS Inn
 
 
 %% Air Gap, Axial Gap, Cryostat Thickness
-machine.airgap_mechanical = 10/1000; %[m], mechanical airgap between stator and rotor
+machine.airgap_mechanical = 5/1000; %[m], mechanical airgap between stator and rotor
 machine.airgap_cryostat = 10/1000; %[m], Gap required for cryostat, includes vacuum thickness in axial length, and the thicknes of the cryostat in axial direction (if exists): HTS surface to mechanical gap starting point
 machine.airgap_magnetic = machine.airgap_cryostat + machine.airgap_mechanical; %[m] Magnetic airgap (i.e. HTS surface to stator coil surface, depends on cryostat dimensions and mechanical airgap)
 

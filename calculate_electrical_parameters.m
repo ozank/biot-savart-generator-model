@@ -17,7 +17,7 @@
 
 
 %% Induced Voltage Calculations
-stator.induced_voltage_per_coil = stator.N_turns * (2 * pi()/sqrt(2)) * machine.f_electrical * flux;  %[Vrms] d Flux_peak/dt, converted to RMS value 
+stator.induced_voltage_per_coil = stator.N_turns * (2 * pi()/sqrt(2)) * machine.f_electrical * stator.flux_per_pole;  %[Vrms] d Flux_peak/dt, converted to RMS value 
 
 stator.induced_voltage_per_phase = stator.induced_voltage_per_coil * stator.Nseries;  %[Vrms], Induced voltage per stator phase (per stack)
 
@@ -32,6 +32,8 @@ stator.current_per_coil = stator.current_density * stator.conductor_area; %[Arms
 stator.phase_current = stator.current_per_coil * stator.Nparalel; %[A,rms], phase current per phase (per axial stack) of machine
 
 %Litz Wire Parameter Calculations
+%To be used for eddy loss calculations
+
 stator.Litz_strand_diameter = 2 * sqrt((stator.conductor_area / stator.Litz_N_strands)/pi); % [mm], diameter of a single strand in the Litz wire, calculated from the area of single strand
 
 stator.Litz_wire_diameter = 2 * sqrt((stator.conductor_area/stator.Litz_fill_factor)/pi); %[mm], diameter of the Litz wire (with strands) including fill factor

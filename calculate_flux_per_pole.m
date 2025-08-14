@@ -13,16 +13,6 @@
 % with the HTS field winding
 %
 
-% Call the main function to draw the coils according to machine dimensions
-main;
-
-%% Modify Stator Dimensions (can be kept same)
-stator.R_outer = HTS.R_outer+0.1;  %to be changed
-stator.R_inner = HTS.R_inner-0.1;  %to be changed
-stator.R_mean = HTS.R_mean;  %to be changed
-
-
-
 %Model to model Single Filament Stator Coil Model
 % Stator winding is approximated by single filament passing through the
 % mid-point of the stator
@@ -41,8 +31,8 @@ stator.mean_turn_length = 2*(filament.R_outer - filament.R_inner) + 2 * (stator.
 %Solution Space Settings 
 angle_offset = 2* machine.pole_angle; %Solution space starting point (0 point is the aligned position with the axis)
 
-data_point_angle= 20;  % number of data points in the tangential directions (through angle)
-data_point_radius = 50; %number of data points in the radial (radius) direction
+% data_point_angle= 20;  % number of data points in the tangential directions (through angle)
+% data_point_radius = 50; %number of data points in the radial (radius) direction
 
 %Stator Stator Filament Span Angle 
 filament.pitch = stator.coil_pitch - stator.coil_width; %Filament pitch at mean radius
@@ -87,15 +77,20 @@ BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % shows the field points plane
 
 %BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % -> shows the field point line
 
-%% Calculate Flux Linkage
+%% Calculate Flux Linkage per coil
 % (Bz, surface integral over polar coordinates)
 %https://math.stackexchange.com/questions/145939/simple-proof-of-integration-in-polar-coordinates
 
-flux = sum (BZ .* R_M *d_R * d_ANGLE*(pi/180), "all")   % int (Bz.dA) in polar coordinates
+stator.flux_per_pole = sum (BZ .* R_M *d_R * d_ANGLE*(pi/180), "all");   %[Wb], Maximum flux in the stator coils
+% int (Bz.dA) in polar coordinates,
 
-%TO BE ADDED
+
+%% Maximum Airgap Flux Density
 %Maximum flux density in the airgap to calculate the eddy current losses in
-%the stator
+%the stator, Gethe the average of the top 10% values to prevent issues with
+%calculation singularities 
+
+stator.B_max = mean(maxk(BZ(:), ceil(numel(BZ)*0.1))); %[Tesla], maximum airgap flux density, averaged over top %10 values
 
 % Plot Bz on the plane
 figure(2), hold on, box on, grid on

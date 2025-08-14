@@ -55,8 +55,6 @@ stator.P_conduction_loss_per_stage = machine.Nphase * stator.phase_current^2 * s
 %Equation(2) second term is neglected as it is too small if the litz wire
 %diameter is smaller than the skin depth
 
-stator.B_max = 2; %[T], maximum flux density acting on the stator coils for eddy loss estimations
-
 %Calculate Skin Depth
 material.skin_depth = sqrt (material.winding_resistivity/(pi * machine.f_electrical * material.mu0))*1000; %[mm], skin depth of the stator conductor (at operating temperature), in mm
 
