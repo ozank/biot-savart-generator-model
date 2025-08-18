@@ -33,3 +33,23 @@ material.winding_resistivity = (1 + material.copper_temperature_constant * (stat
 %Stator Winding Material: Aluminium (uncomment the below core if the material is aluminium
 %material.winding_resistivity = (1 + material.aluminium_temperature_constant * (stator.operating_temperature - 20))...
 %                                * material.aluminium_resistivity_at_room_temperature; %[Ohm/m], effective resistivity at operating temperature 
+
+
+
+%% Mass & Cost Properties
+
+%% Density of materials
+material.copper_density = 8960; %[kg/m^3] Density of copper
+material.aluminium_density = 2700; %[kg/m^3] Density of aluminium
+material.HTS_density = 8000; %[kg/m^3] Density of HTS tape
+
+material.winding_density = material.copper_density; %[kg/m^3], chose between aluminium and copper windings depending on the design
+
+%% Cost of Materials (to be adjusted)
+material.copper_cost = 35; % [GBP/kg], unit cost of copper wire
+material.aluminium_cost = 8; % [GBP/kg], unit cost of aluminium wire
+
+material.winding_cost = material.copper_cost; %[GBP/kg],  chose between aluminium and copper windings depending on the design
+
+material.HTS_cost = 1000; %[GBP/kg], or [GBP/m], to be adjusted, cost of HTS YBCO tape
+

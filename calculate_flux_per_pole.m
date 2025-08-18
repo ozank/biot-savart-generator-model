@@ -26,7 +26,7 @@ stator.coil_angle = 360 / stator.Ncoil;   % One stator coil pole pitch angle in 
 stator.coil_pitch = stator.R_mean * (stator.coil_angle *pi() /180); %Coil pitch at mean radius
 
 %Filament length for mean stator coil lenght (for loss calculations)
-stator.mean_turn_length = 2*(filament.R_outer - filament.R_inner) + 2 * (stator.coil_pitch - stator.coil_width); %[m] maen turn length of stator coil
+stator.mean_turn_length = 2*(filament.R_outer - filament.R_inner) + 2 * (stator.coil_pitch - stator.coil_width); %[m] mean turn length of stator coil
 
 %Solution Space Settings 
 angle_offset = 2* machine.pole_angle; %Solution space starting point (0 point is the aligned position with the axis)

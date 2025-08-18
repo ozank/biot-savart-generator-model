@@ -72,3 +72,5 @@ calculate_power_efficiency;
 %%TO BE ADDED
 %% Calculate mass cost function
 % active material cost, material prices
+
+calculate_mass_cost;
