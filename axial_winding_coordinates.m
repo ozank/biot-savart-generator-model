@@ -25,6 +25,9 @@ filament_HTS.coil_angle = ((HTS.coil_pitch - HTS.coil_width) / HTS.pole_pitch) *
 filament_HTS.R_inner = HTS.R_inner + 0.5 * HTS.coil_width; %[m], inner radius of HTS filament for biot savart model
 filament_HTS.R_outer = HTS.R_outer - 0.5 * HTS.coil_width; %[m], outer radius of HTS filament for biot savart model
 
+%Filament length for mean HTS (per coil)(for mass/cost calculations)
+HTS.mean_turn_length = 2*(filament_HTS.R_outer - filament_HTS.R_inner) + 2 * (HTS.coil_pitch - HTS.coil_width); %[m] mean turn length of single HTS coil
+
 %CREATE TRAPEZOIDAL WINDING DIMENSIONS
 
 %refer to the figure

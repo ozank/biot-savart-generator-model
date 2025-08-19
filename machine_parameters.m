@@ -18,7 +18,7 @@
 
 %% Main Machine Parameters
 
-machine.Npole = 120;                        % Number of Poles
+%machine.Npole = 120;                        % Number of Poles
 machine.pole_angle = 360 / machine.Npole;   % One pole pitch angle in degrees
 
 machine.Nrpm = 10;                          %Rated rotational speed of the generator (RPM)
@@ -59,7 +59,7 @@ stator.Nparalel = 2;            %Number of paralel connected stator winding coil
 stator.Nseries = stator.Ncoil_per_phase/stator.Nparalel;  %Number of series connected stator winding per phase 
 
 % Current Density & Fill Factor
-stator.current_density = 7;    %[A/mm^2, RMS], Current density in stator windings (calculated in the conductor area)
+%stator.current_density = 7;    %[A/mm^2, RMS], Current density in stator windings (calculated in the conductor area)
 stator.fill_factor = 0.8;       %Fill factor (independent or calculated according to stator coil cross section area)
 
 %Litz Wire Parameters

@@ -16,6 +16,16 @@
 % Axial Adjustment of Rotor Coils
 coil_Z_offset = 0; % coil is placed on X-Y plane, coil Z offset defines Z coordinates
 
+%% TO DO List
+
+% - Adjust the router and Rinner according to filament dimensions
+% - Calculate the mean turn lenght for the single module
+% Be careful the code below calculates mean length per coil not length per
+% module!
+%Filament length for mean HTS (per coil)(for mass/cost calculations)
+%HTS.mean_turn_length = 2*(filament_HTS.R_outer - filament_HTS.R_inner) + 2 * (HTS.coil_pitch - HTS.coil_width); %[m] mean turn length of single HTS coil
+
+
 
 %CREATE WAVE WINDING DIMENSIONS
 
