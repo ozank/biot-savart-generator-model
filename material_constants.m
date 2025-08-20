@@ -46,10 +46,14 @@ material.HTS_density = 8000; %[kg/m^3] Density of HTS tape
 material.winding_density = material.copper_density; %[kg/m^3], chose between aluminium and copper windings depending on the design
 
 %% Cost of Materials (to be adjusted)
-material.copper_cost = 35; % [GBP/kg], unit cost of copper wire
-material.aluminium_cost = 8; % [GBP/kg], unit cost of aluminium wire
+material.copper_cost = 35; % [$/kg], unit cost of copper wire
+material.aluminium_cost = 8; % [$/kg], unit cost of aluminium wire
 
 material.winding_cost = material.copper_cost; %[GBP/kg],  chose between aluminium and copper windings depending on the design
 
-material.HTS_cost = 1000; %[GBP/kg], or [GBP/m], to be adjusted, cost of HTS YBCO tape
+% HTS cost per meter (from Shuangrong 08/2025)
+%  4mm  40-50 $/kg
+% 12 mm 120-150 $/kg from Super power
+% a reduction is assumed for bulk orders
+material.HTS_cost = 80; %[$/m], or [$/kg], to be adjusted, cost of HTS YBCO tape
 

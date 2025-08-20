@@ -1,5 +1,5 @@
 %---------------------------------------------------
-%  NAME:      Optimization Cost.m
+%  NAME:      Optimization Cost With Penalty.m
 %  WHAT:      Cost funtion for the genetic algoritm:
 %  - Magnetostatic analysis (With Biot Savart Model)
 %  - Electrical Equivalent Circuit Parameters
@@ -7,13 +7,14 @@
 %  - Mass/Cost Calculation
 %
 %  Inputs: Defined by the Pre Optimization Function
-%  Outputs: Cost function (suitable for multi objective optimization)
+%  Penalty: Penalty functions added for efficiency etc.
+%  Outputs: Single Cost function (suitable for singleobjective optimization)
 %
 %  AUTHOR:    Ozan Keysan (08/2025)
 %  REQUIRED:  BSmag Toolbox 20150407 (for magnetic field calculations)
 %----------------------------------------------------
 
-function cost = optimization_cost(inputs)
+function cost = optimization_cost_with_penalty(inputs)
 
 BSmag = BSmag_init(); % Initialize BSmag analysis
 
@@ -29,7 +30,7 @@ material_constants; % Load material constants
 
 %Input arrangements
 
-machine.Npole = 4*inputs(1);   %Number of Poles (make sure it is a multiple of 4
+machine.Npole = 4*inputs(1);   %Number of Poles divided by 4  (make sure it is a multiple of 4
 %machine.Npole = 4*floor(inputs(1)/4);   %Number of Poles (make sure it is a multiple of 4
 stator.current_density = inputs(2);     % Current Density (A/mm^2)
 
@@ -71,11 +72,39 @@ calculate_mass_cost;
 
 %% COST FUNCTION ADJUSTMENTS
 
-% Default Optimization Function Tries to Minimize
-cost = zeros(1,2); % allocate output depending on number of parameters
+%% Penalty Functions
 
-cost(1) =  - machine.efficiency;  % [0 1] Efficiency of the machine
-cost(2) =  - machine.P_output;    % [W] Electrical Output Power
+%Limits for Penalty
+limit.efficiency = 0.95;   % Minimum required efficiency
+limit.P_output = 5e6;      % [W], Required power output
+
+%reset penalties
+penalty.efficiency = 0; 
+penalty.P_output = 0; 
+penalty.total = 0; 
+
+%Efficiency Limit Penalty
+if (machine.efficiency < limit.efficiency)
+    penalty.efficiency = 1e10 * (penalty.efficiency - machine.efficiency)^2;
+else
+    %penalty.efficiency = 0; 
+end    
+
+%Power Output Limit Penalty
+if (machine.P_output < limit.P_output)
+    penalty.P_output = 1e2 * (penalty.P_output - machine.P_output)^2;
+else
+    %penalty.P_output = 0; 
+end    
+
+
+%% Overall Penalty Values
+
+penalty.total = penalty.efficiency + penalty.P_output;
+
+%Objective Function
+
+cost = HTS.cost + stator.cost + penalty.total;
 
 %Close all figures
 close all

@@ -46,10 +46,9 @@ HTS.mass = material.HTS_density * HTS.length_total * (HTS.tape_width /1000) * (H
 %% Material Cost Calculations
 
 % Stator Copper/Aluminium Material Cost Calculation
-stator.cost = stator.mass *  material.winding_cost; %[GBP] material cost of stator windings
+stator.cost = stator.mass *  material.winding_cost; %[$] material cost of stator windings
 
 %HTS Material Cost
 % Can be calculated either per kg or per meter
-
-HTS.cost = HTS.mass * material.HTS_cost; %[GBP] material cost of the HTS winding
+HTS.cost = HTS.length_total * material.HTS_cost; %[$] material cost of the HTS winding
 

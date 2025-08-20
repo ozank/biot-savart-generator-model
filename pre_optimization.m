@@ -34,14 +34,14 @@ number_of_inputs = 2; %Number of optimization inputs
 %Current Density
 
 %Lower and Upper Bounds for the optimization Inputs
-bounds = [60 200;     %Number of Poles
-          2  10]      %J (current density) A/mm^2
+bounds = [25 50;     %Number of Poles
+          4  10]      %J (current density) A/mm^2
 
 % Lower Bounds for optimization inputs
 lower_bounds = bounds(:,1)   % First column assigned to lower bounds
 
 %Upper Bounds for optimization inputs
-upper_bounds = bounds(:,1)   % Second column assigned to upper bounds
+upper_bounds = bounds(:,2)   % Second column assigned to upper bounds
 
 %IntegerConditions
 IntCon = [1]; % The first variable is integer or [1,3] first and third inputs are integers

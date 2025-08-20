@@ -54,3 +54,5 @@ rng default
 nvars = 2;
 opts = optimoptions(@gamultiobj,'PlotFcn','gaplotpareto');
 [xga,fvalga,~,gaoutput] = gamultiobj(@(x)optimization_cost(x),nvars,[],[],[],[],lower_bounds,upper_bounds,[],opts);
+
+[x,fval,exitflag,output,population,scores]

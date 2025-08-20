@@ -19,9 +19,16 @@ BSmag = BSmag_init(); % Initialize BSmag analysis
 %effect on calculation time
 dGamma2 = 1e-2; % filament max discretization step [m], default to 1 cm  
 
+%Optimization Outputs
+machine.Npole = 240 % 4*solution(1);   %Number of Poles divided by 4  (make sure it is a multiple of 4
+%machine.Npole = 4*floor(inputs(1)/4);   %Number of Poles (make sure it is a multiple of 4
+stator.current_density = 6 %solution(2);     % Current Density (A/mm^2)
+
 
 %% Get Machine Parameters
 machine_parameters;      %load machine parameters
+%Input arrangements
+
 
 %% Get Material Properties
 material_constants; % Load material constants

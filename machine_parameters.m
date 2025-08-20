@@ -25,7 +25,7 @@ machine.Nrpm = 10;                          %Rated rotational speed of the gener
 machine.f_electrical = (machine.Nrpm /60)* (machine.Npole/2);   %Machine induced voltage frequency (Hz)
 
 %Number of axial stacks
-machine.Nstacks = 3; % Number of generator stator stacks in the axial direction
+machine.Nstacks = 5; % Number of generator stator stacks in the axial direction
 
 stator.Ncoil = machine.Npole * 3/4;        %Number of stator coils per stage, assumes 3/4 relation
 machine.Nphase = 3;                         %Number of phases, default to 3
@@ -35,7 +35,7 @@ stator.Ncoil_per_phase = stator.Ncoil / machine.Nphase;  %Number of stator coils
 
 % Rotor
 % Mean radius (independent)
-HTS.R_mean = 3000/1000;     %meter, Mean radius of the HTS rotor
+HTS.R_mean = 5000/1000;     %meter, Mean radius of the HTS rotor
 HTS.coil_length = 300/1000;  %meters, Straight section length of rotor HTS coil
 %Outer and other parameters are calculated below using number of turns,
 %wire dimensions etc.
