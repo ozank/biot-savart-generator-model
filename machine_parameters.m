@@ -18,14 +18,14 @@
 
 %% Main Machine Parameters
 
-machine.Npole = 120;                        % Number of Poles
+%machine.Npole = 120;                        % Number of Poles
 machine.pole_angle = 360 / machine.Npole;   % One pole pitch angle in degrees
 
 machine.Nrpm = 10;                          %Rated rotational speed of the generator (RPM)
 machine.f_electrical = (machine.Nrpm /60)* (machine.Npole/2);   %Machine induced voltage frequency (Hz)
 
 %Number of axial stacks
-machine.Nstacks = 3; % Number of generator stator stacks in the axial direction
+%machine.Nstacks = 3; % Number of generator stator stacks in the axial direction
 
 stator.Ncoil = machine.Npole * 3/4;        %Number of stator coils per stage, assumes 3/4 relation
 machine.Nphase = 3;                         %Number of phases, default to 3
@@ -42,11 +42,12 @@ HTS.R_mean = 2500/1000;     %meter, Mean radius of the HTS rotor
 
 %Stator
 stator.R_mean = HTS.R_mean;  %can be modified but by default, equal to rotor mean radius
-stator.coil_length = 300/1000;  %meters, Straight section length of the stator coils, independent but correlated with HTS.coil_length, stator.R_inner, Stator.R_outer
+%stator.coil_length = 300/1000;  %meters, Straight section length of the stator coils, independent but correlated with HTS.coil_length, stator.R_inner, Stator.R_outer
+stator.coil_length = HTS.coil_length; %make stator length equal to HTS length (temporary)
 
 %% Rotor HTS Parameters and Excitation Current
 HTS.current = 550; %A   HTS Coil Current (DC), per tape
-HTS.N_turns = 100; %    Number of turns of HTS coil (per layer)
+%HTS.N_turns = 100; %    Number of turns of HTS coil (per layer)
 HTS.N_layers = 2;  %    Number of layers, default is 2 for double pancake configurations
 
 %Define the total current for biot savart conductor
@@ -54,12 +55,12 @@ I = HTS.current * HTS.N_turns * HTS.N_layers; %[A] filament current in the biot 
 
 %% Stator Coil Parameters
 
-stator.N_turns = 50;             %Number of turns in a single stator coil
-stator.Nparalel = 2;            %Number of paralel connected stator winding coils per phase (default to 1)
+%stator.N_turns = 50;             %Number of turns in a single stator coil
+stator.Nparalel = 1;            %Number of paralel connected stator winding coils per phase (default to 1)
 stator.Nseries = stator.Ncoil_per_phase/stator.Nparalel;  %Number of series connected stator winding per phase 
 
 % Current Density & Fill Factor
-stator.current_density = 7;    %[A/mm^2, RMS], Current density in stator windings (calculated in the conductor area)
+%stator.current_density = 7;    %[A/mm^2, RMS], Current density in stator windings (calculated in the conductor area)
 stator.fill_factor = 0.8;       %Fill factor (independent or calculated according to stator coil cross section area)
 
 %Litz Wire Parameters
@@ -68,14 +69,14 @@ stator.Litz_fill_factor = 1; % Ignored for now, the overall fill factor is inclu
 
 
 %% Stator Coil Width and Height Calculations
-stator.coil_width_to_coil_pitch_ratio = 0.4;  %Coil width to pole pitch ratio (at mean radius), <0.5 but considering inner radius 0.45 is a more realistic limit
+%stator.coil_width_to_coil_pitch_ratio = 0.4;  %Coil width to pole pitch ratio (at mean radius), <0.5 but considering inner radius 0.45 is a more realistic limit
 
 stator.coil_angle = 360 / stator.Ncoil;   % One stator coil pole pitch angle in degrees
 stator.coil_pitch = stator.R_mean * (stator.coil_angle *pi() /180); %[m], Coil pitch at mean radius
 
 %Stator Coil Width & Thickness
 stator.coil_width = stator.coil_pitch * stator.coil_width_to_coil_pitch_ratio ;    %meters, Width of the stator coil on one side
-stator.coil_thickness = 25/1000;    %meters, Thickness of single stator coil
+%stator.coil_thickness = 25/1000;    %meters, Thickness of single stator coil
 
 stator.R_bending = 30/1000;     %meters, Bending radius of the stator coils at the four outer corners
 
@@ -87,7 +88,7 @@ stator.R_inner = stator.R_mean - 0.5*stator.coil_length - stator.coil_width;  %M
 %% HTS Tape Dimensions
 
 HTS.tape_width = 12; %[mm], single HTS tape width
-HTS.tape_thickness = 0.3; %[mm] single HTS tape thickness
+HTS.tape_thickness = 0.2; %[mm] single HTS tape thickness
 
 %% HTS Coil Parameters, Rotor Outer Inner Dimensions
 %Secondary parameters
@@ -109,7 +110,7 @@ HTS.R_inner = HTS.R_mean - 0.5 * HTS.coil_length - HTS.coil_width; %[m], HTS Inn
 
 %% Air Gap, Axial Gap, Cryostat Thickness
 machine.airgap_mechanical = 4.5/1000; %[m], mechanical airgap between stator and rotor
-machine.airgap_cryostat = 0/1000; %[m], Gap required for cryostat, includes vacuum thickness in axial length, and the thicknes of the cryostat in axial direction (if exists): HTS surface to mechanical gap starting point
+machine.airgap_cryostat = 10/1000; %[m], Gap required for cryostat, includes vacuum thickness in axial length, and the thicknes of the cryostat in axial direction (if exists): HTS surface to mechanical gap starting point
 machine.airgap_magnetic = machine.airgap_cryostat + machine.airgap_mechanical; %[m] Magnetic airgap (i.e. HTS surface to stator coil surface, depends on cryostat dimensions and mechanical airgap)
 
 machine.airgap_HTS_to_HTS = 2 * machine.airgap_magnetic + stator.coil_thickness; %[m], Axial distance between to HTS coil surfaces between stacks (axial direction)

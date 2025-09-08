@@ -55,5 +55,5 @@ material.winding_cost = material.copper_cost; %[GBP/kg],  chose between aluminiu
 %  4mm  40-50 $/kg
 % 12 mm 120-150 $/kg from Super power
 % a reduction is assumed for bulk orders
-material.HTS_cost = 80; %[$/m], or [$/kg], to be adjusted, cost of HTS YBCO tape
+material.HTS_cost = 50; %[$/m], or [$/kg], to be adjusted, cost of HTS YBCO tape
 

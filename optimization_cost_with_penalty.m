@@ -29,10 +29,18 @@ material_constants; % Load material constants
 
 
 %Input arrangements
+%Make sure they are aligned with the input upper and lower limits in GA
+%optimization
 
 machine.Npole = 4*inputs(1);   %Number of Poles divided by 4  (make sure it is a multiple of 4
 %machine.Npole = 4*floor(inputs(1)/4);   %Number of Poles (make sure it is a multiple of 4
 stator.current_density = inputs(2);     % Current Density (A/mm^2)
+HTS.coil_length = inputs(3);
+HTS.N_turns = inputs(4);
+stator.N_turns = inputs(5);
+stator.coil_width_to_coil_pitch_ratio = inputs(6);
+stator.coil_thickness = inputs(7);
+machine.Nstacks = inputs(8);
 
 
 %% Get Machine Parameters
@@ -92,7 +100,7 @@ end
 
 %Power Output Limit Penalty
 if (machine.P_output < limit.P_output)
-    penalty.P_output = 1e2 * (penalty.P_output - machine.P_output)^2;
+    penalty.P_output = 1 * (penalty.P_output - machine.P_output)^2;
 else
     %penalty.P_output = 0; 
 end    
