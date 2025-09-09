@@ -42,12 +42,12 @@ number_of_inputs = 8; %Number of optimization inputs
 %Lower and Upper Bounds for the optimization Inputs
 bounds = [20 40;      % Number of Poles ( the value divided by 4) due to simulation constraints
           5 10;       % J (current density) A/mm^2
-          200 500;    % 3- HTS.coil_length
+          0.2 0.5;    % 3- HTS.coil_length
           80 200;     % 4- HTS.N_turns
           30 200;     % 5- stator.N_turns
           0.4 0.45;   % 6- stator.coil_width_to_coil_pitch_ratio
-          20 80;      % 7- stator.coil_thickness    
-          2  6]      %8- machine.Nstacks
+          0.02 0.08;      % 7- stator.coil_thickness    
+          3  3]      %8- machine.Nstacks
 
 % Lower Bounds for optimization inputs
 lower_bounds = bounds(:,1)   % First column assigned to lower bounds
@@ -58,7 +58,7 @@ upper_bounds = bounds(:,2)   % Second column assigned to upper bounds
 %IntegerConditions
 % Define the parameters that take integer value ( for shorter converge
 % time)
-IntCon = [1, 3, 4, 5, 7, 8]; % The first variable is integer or [1,3] first and third inputs are integers
+IntCon = [1, 4, 5, 8]; % The first variable is integer or [1,3] first and third inputs are integers
 
 %% Flux Per Pole (with Biot Savart Model)
 %Determine number of data points for airgap flux density calculations
