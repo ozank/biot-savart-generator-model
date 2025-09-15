@@ -17,6 +17,7 @@ dGamma2 = 1e-2; % filament max discretization step [m], default to 1 cm
 
 %% Get Machine Parameters
 machine_parameters;      %large machine parameters
+small_machine_parameters;      %large machine parameters
 
 %% Get Material Properties
 material_constants; % Load material constants
@@ -43,7 +44,7 @@ material_constants; % Load material constants
 % comment out below for race track coil
 
  axial_winding_coordinates;
- Npoles_radial = 12; % Number of modules to be simulated in the radial direction, default 8
+ Npoles_radial = 8; % Number of modules to be simulated in the radial direction, default 8
  %Npoles_radial = machine.Npole/4; 
 
 % Add windings for the axial race track winding
@@ -60,13 +61,13 @@ material_constants; % Load material constants
 
 % %% Solution Space A: Polar Plane Segment on Z-axis
 % % %Solution Space 
- R_min = 2;  %Solution space inner radius
- R_max = 3; %Solution space outer space
+ R_min = 0.08;  %Solution space inner radius
+ R_max = 0.28; %Solution space outer space
 % 
- angle_offset = 3; %Solution space starting point
- angle_span = 12; % Solution angle span (degrees)
+ angle_offset = 0; %Solution space starting point
+ angle_span = 360; % Solution angle span (degrees)
 % 
- data_point_angle= 60;  % number of data points in the tangential directions (through angle)
+ data_point_angle= 360;  % number of data points in the tangential directions (through angle)
  data_point_radius = 50; %number of data points in the radial (radius) direction
 % 
  r_M = linspace (R_min,R_max, data_point_radius+1);
@@ -138,9 +139,9 @@ material_constants; % Load material constants
 
 
 % Plot Bz on the plane
-% figure(2), hold on, box on, grid on
-%     contourf(X, Y, BZ), colorbar
-% xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
+figure(2), hold on, box on, grid on
+    contourf(X, Y, BZ), colorbar
+xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
 
 % %Other Plot Options for Reserve
 % 

@@ -48,6 +48,10 @@ end
 end
 
 %% End Winding Coil Loops (Vertical Ones)
+% for wnd winding type = 1 or = 3, do not plot if there is no end winding
+
+if end_winding_type > 0 % only plot vertical end winding types for types 1 or 3 
+
 
 for n = 1:( Npoles_radial/2)  % Add end windings on one side with half of the pole number per module * module number
 
@@ -69,10 +73,16 @@ end_winding_coordinates_rotated(:,3) = -1 * end_winding_coordinates_rotated(:,3)
 [BSmag] = BSmag_add_filament(BSmag,end_winding_coordinates_rotated,-I,dGamma2);
 
 end
+else
+    %do nothing
+end
 
-%% End Winding Coil Loops (Diagonal ones, but angle can be adjusted)
+
+%% End Winding Coil Loops (Diagonal  ones (if used), but angle can be adjusted)
 %rotation angle around Y-axis
 %end_winding_rotation_angle = 60;
+
+if end_winding_type == 3 % only plot end winding types id the diagonal winding type is selected
 
 for n = 1:( Npoles_radial/2)  % Add end windings on one side with half of the pole number per module * module number
 
@@ -151,4 +161,7 @@ end_winding_coordinates_rotated(:,3) = end_winding_coordinates_temp(:,3);
 end_winding_coordinates_rotated(:,3) = -1 * end_winding_coordinates_rotated(:,3);     % Take symmetry over X-Y plane, by multlipying Z coordinate by -1
 [BSmag] = BSmag_add_filament(BSmag,end_winding_coordinates_rotated,-I,dGamma2);
 
+end
+else
+    %do nothing
 end

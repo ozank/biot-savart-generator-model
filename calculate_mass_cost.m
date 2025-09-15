@@ -33,10 +33,11 @@ stator.mass = material.winding_density *...
 % Total number of HTS Coils
 %End windings are calculated using 3 end coils (2 angled + 1  vertical),
 %needs to be adjusted for different configuration
-%configuration below uses double pancake (HTS.N_layers)
-HTS.Ncoils_total =  machine.Npole * HTS.N_layers * machine.Nstacks + 2 * (machine.Npole/2) * 3;
 
-HTS.length_total = HTS.N_turns *HTS.mean_turn_length * HTS.Ncoils_total; %[m] Total length of HTS cable that is required for the design
+%configuration below uses double pancake (HTS.N_layers)
+HTS.Ncoils_total =  machine.Npole * (machine.Nstacks + 1) + 2 * (machine.Npole/2) * end_winding_type;
+
+HTS.length_total = HTS.N_turns * HTS.N_layers * HTS.mean_turn_length * HTS.Ncoils_total; %[m] Total length of HTS cable that is required for the design
 
 HTS.mass = material.HTS_density * HTS.length_total * (HTS.tape_width /1000) * (HTS.tape_thickness/1000); %[kg], total mass of the HTS material
 

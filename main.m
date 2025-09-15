@@ -27,6 +27,8 @@ dGamma2 = 1e-2; % filament max discretization step [m], default to 1 cm
 
 %% Get Machine Parameters
 machine_parameters;      %load machine parameters
+%small_machine_parameters;      %load small machine parameters
+
 %Input arrangements
 
 
@@ -53,7 +55,7 @@ material_constants; % Load material constants
 % comment out below for race track coil
 
  axial_winding_coordinates;
- Npoles_radial = 12; % Number of modules to be simulated in the radial direction, default 8
+ Npoles_radial = 8; % Number of modules to be simulated in the radial direction, default 8
  
 % Add windings for the axial race track winding
  plot_axial_race_track_winding;

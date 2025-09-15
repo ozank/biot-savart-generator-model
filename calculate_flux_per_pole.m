@@ -67,7 +67,7 @@ angle_M = linspace (filament.angle_min + 0.5*d_ANGLE, ...
 [X_M,Y_M] = pol2cart(ANGLE_M,R_M);
 
 %Z coordinate of the filament, can be modified for any axial displacement
-Z_M = zeros(size(X_M)); % z [m] %equal size with X_M
+Z_M = zeros(size(X_M));%+0.0325; % z [m] %equal size with X_M
 
 
 BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % shows the field points plane
@@ -103,6 +103,7 @@ hold on
 plot(X(:),Y(:),'k.')
 %plot original filament (middle of stator coils area)
 hold on
-plot(polyshape([filament.R_inner*cosd(filament.angle_min) filament.R_inner*cosd(filament.angle_max) filament.R_outer*cosd(filament.angle_max) filament.R_outer*cosd(filament.angle_min) ] ...
-    ,[filament.R_inner*sind(filament.angle_min) filament.R_inner*sind(filament.angle_max) filament.R_outer*sind(filament.angle_max) filament.R_outer*sind(filament.angle_min)  ]));
+%to draw boundaries of the stator windings
+%plot(polyshape([filament.R_inner*cosd(filament.angle_min) filament.R_inner*cosd(filament.angle_max) filament.R_outer*cosd(filament.angle_max) filament.R_outer*cosd(filament.angle_min) ] ...
+%    ,[filament.R_inner*sind(filament.angle_min) filament.R_inner*sind(filament.angle_max) filament.R_outer*sind(filament.angle_max) filament.R_outer*sind(filament.angle_min)  ]));
 

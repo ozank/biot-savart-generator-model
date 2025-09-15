@@ -84,7 +84,7 @@ calculate_mass_cost;
 
 %Limits for Penalty
 limit.efficiency = 0.95;   % Minimum required efficiency
-limit.P_output = 5e6;      % [W], Required power output
+limit.P_output = 10e6;      % [W], Required power output
 
 %reset penalties
 penalty.efficiency = 0; 

@@ -35,7 +35,7 @@ stator.Ncoil_per_phase = stator.Ncoil / machine.Nphase;  %Number of stator coils
 
 % Rotor
 % Mean radius (independent)
-HTS.R_mean = 2500/1000;     %meter, Mean radius of the HTS rotor
+HTS.R_mean = 3000/1000;     %meter, Mean radius of the HTS rotor
 %HTS.coil_length = 300/1000;  %meters, Straight section length of rotor HTS coil
 %Outer and other parameters are calculated below using number of turns,
 %wire dimensions etc.
@@ -140,7 +140,8 @@ HTS.R_bottom = HTS.R_inner - 0.3;   %meter, Bottom radius of the HTS rotor for w
 %% End Winding Coordinates
 % To be modified Refer to Figure
 % Rotation angle of the end winding coils
+end_winding_type = 3; %End winding type: 0= no end winding, 1 = only vertical, 3 = vertical with diagonal ones (three in total)
 end_winding_rotation_angle= 45;
 
 end_winding_gap = 0.1;   %Z distance from the last stage of coils (the name can be modified)
-end_winding_Z = 0.5 *coil_to_coil_gap * machine.Nstacks +0.1 ;  %Z-coordinate of the end winding
+end_winding_Z = 0.5 *coil_to_coil_gap * machine.Nstacks + end_winding_gap ;  %Z-coordinate of the end winding
