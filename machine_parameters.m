@@ -35,7 +35,7 @@ stator.Ncoil_per_phase = stator.Ncoil / machine.Nphase;  %Number of stator coils
 
 % Rotor
 % Mean radius (independent)
-HTS.R_mean = 2500/1000;     %meter, Mean radius of the HTS rotor
+HTS.R_mean = 3000/1000;     %meter, Mean radius of the HTS rotor
 %HTS.coil_length = 300/1000;  %meters, Straight section length of rotor HTS coil
 %Outer and other parameters are calculated below using number of turns,
 %wire dimensions etc.
