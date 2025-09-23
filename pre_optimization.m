@@ -40,14 +40,14 @@ number_of_inputs = 8; %Number of optimization inputs
 % 8- machine.Nstacks
 
 %Lower and Upper Bounds for the optimization Inputs
-bounds = [15 30;      % Number of Poles ( the value divided by 4) due to simulation constraints
-          3 8;       % J (current density) A/mm^2
-          0.1 0.4;    % 3- HTS.coil_length
-          80 200;     % 4- HTS.N_turns
-          30 200;     % 5- stator.N_turns
+bounds = [10 10;      % Number of Poles ( the value divided by 4) due to simulation constraints
+          4 8;       % J (current density) A/mm^2
+          0.2 0.5;    % 3- HTS.coil_length
+          100 250;     % 4- HTS.N_turns
+          40 200;     % 5- stator.N_turns
           0.35 0.45;   % 6- stator.coil_width_to_coil_pitch_ratio
-          0.01 0.05;      % 7- stator.coil_thickness    
-          5  5]      %8- machine.Nstacks
+          0.03 0.05;      % 7- stator.coil_thickness    
+          3  3]      %8- machine.Nstacks
 
 % Lower Bounds for optimization inputs
 lower_bounds = bounds(:,1)   % First column assigned to lower bounds
