@@ -93,16 +93,18 @@ stator.flux_per_pole = sum (BZ .* R_M *d_R * d_ANGLE*(pi/180), "all");   %[Wb], 
 stator.B_max = mean(maxk(BZ(:), ceil(numel(BZ)*0.1))); %[Tesla], maximum airgap flux density, averaged over top %10 values
 
 % Plot Bz on the plane
-figure(2), hold on, box on, grid on
-contourf(X,Y, BZ), colorbar
-%clim([0 5])
-axis equal
-xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
-%add data points
-hold on
-plot(X(:),Y(:),'k.')
-%plot original filament (middle of stator coils area)
-hold on
+%commented out to reduce optimization time
+% figure(2), hold on, box on, grid on
+% contourf(X,Y, BZ), colorbar
+% %clim([0 5])
+% axis equal
+% xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
+% %add data points
+% hold on
+% plot(X(:),Y(:),'k.')
+% %plot original filament (middle of stator coils area)
+% hold on
+
 %to draw boundaries of the stator windings
 %plot(polyshape([filament.R_inner*cosd(filament.angle_min) filament.R_inner*cosd(filament.angle_max) filament.R_outer*cosd(filament.angle_max) filament.R_outer*cosd(filament.angle_min) ] ...
 %    ,[filament.R_inner*sind(filament.angle_min) filament.R_inner*sind(filament.angle_max) filament.R_outer*sind(filament.angle_max) filament.R_outer*sind(filament.angle_min)  ]));

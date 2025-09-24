@@ -10,7 +10,7 @@
 %  Penalty: Penalty functions added for efficiency etc.
 %  Outputs: Single Cost function (suitable for singleobjective optimization)
 %
-%  AUTHOR:    Ozan Keysan (08/2025)
+%  AUTHOR:    Ozan Keysan (08/2025), modified (09/2025)
 %  REQUIRED:  BSmag Toolbox 20150407 (for magnetic field calculations)
 %----------------------------------------------------
 
@@ -41,7 +41,7 @@ stator.N_turns = inputs(5);
 stator.coil_width_to_coil_pitch_ratio = inputs(6);
 stator.coil_thickness = inputs(7);
 machine.Nstacks = inputs(8);
-
+HTS.R_mean = inputs(9);
 
 %% Get Machine Parameters
 % Don't forget to comment out any input parameters.

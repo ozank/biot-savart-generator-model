@@ -26,7 +26,7 @@ material_constants; % Load material constants
 %% Optimization Parameters
 
 % Number of Inputs
-number_of_inputs = 8; %Number of optimization inputs
+number_of_inputs = 9; %Number of optimization inputs
 
 %Inputs
 %inputs = [3 1];
@@ -40,14 +40,15 @@ number_of_inputs = 8; %Number of optimization inputs
 % 8- machine.Nstacks
 
 %Lower and Upper Bounds for the optimization Inputs
-bounds = [10 10;      % Number of Poles ( the value divided by 4) due to simulation constraints
+bounds = [30 30;      % Number of Poles ( the value divided by 4) due to simulation constraints
           4 8;       % J (current density) A/mm^2
           0.2 0.5;    % 3- HTS.coil_length
           100 250;     % 4- HTS.N_turns
           40 200;     % 5- stator.N_turns
           0.35 0.45;   % 6- stator.coil_width_to_coil_pitch_ratio
           0.03 0.05;      % 7- stator.coil_thickness    
-          3  3]      %8- machine.Nstacks
+          5  5;          %8- machine.Nstacks
+          3  3]          % HTS.R_mean   
 
 % Lower Bounds for optimization inputs
 lower_bounds = bounds(:,1)   % First column assigned to lower bounds

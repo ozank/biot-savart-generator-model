@@ -19,7 +19,7 @@ stator.N_turns = solution(5);
 stator.coil_width_to_coil_pitch_ratio = solution(6);
 stator.coil_thickness = solution(7);
 machine.Nstacks = solution(8);
-
+HTS.R_mean = solution(9);
 
 %% MAIN Function Call
 
