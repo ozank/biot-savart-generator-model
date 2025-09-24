@@ -40,7 +40,7 @@ number_of_inputs = 9; %Number of optimization inputs
 % 8- machine.Nstacks
 
 %Lower and Upper Bounds for the optimization Inputs
-bounds = [30 30;      % Number of Poles ( the value divided by 4) due to simulation constraints
+bounds = [40 40;      % Number of Poles ( the value divided by 4) due to simulation constraints
           4 8;       % J (current density) A/mm^2
           0.2 0.5;    % 3- HTS.coil_length
           100 250;     % 4- HTS.N_turns
