@@ -40,7 +40,7 @@ end
 design_table = struct2table(design_outputs);
 
 % save design tables as mat files for reviewing later on
-%save("optimized_results", "design_table", "design_inputs")
+save("optimized_results", "design_table", "design_inputs")
 
 %% Plots
 % Generate Comparison plots in tiled layout
@@ -57,36 +57,51 @@ set(groot, 'defaultAxesFontSize', 12, ...
            'defaultLineLineWidth', 1.5, ...
            'defaultLineMarkerSize', 5);
 
-title(t,'20 MW, 10 rpm, 3 stacks, 6 m diameter, 95% Efficiency with changing Number of Poles', ...
+title(t,'20 MW, 10 rpm, 6 m diameter, 95% Efficiency, Variable Pole Number', ...
     'FontSize', 12)
 xlabel(t,'Number of Poles', 'FontSize', 12)
 
 %HTS Length
 nexttile
-plot([design_table.machine.Npole], [design_table.HTS.length_total]/1e3, '-*')
+pole = [design_table.machine.Npole];
+hts_length = [design_table.HTS.length_total]/1e3;
+
+plot(pole(1:6), hts_length(1:6), ':o')
+hold on
+plot(pole(7:14), hts_length(7:14), ':^r')
 ylabel('Total Length of HTS Tape (km)', 'FontSize', 12)
+
 ylim([0 500])
+
+hold off
+
+legend('Number of stacks = 3','Number of stacks = 5','Location','southeast','Orientation','vertical')
+
 grid on
 box on
 
 %Stator Mass
 nexttile
-plot([design_table.machine.Npole], [design_table.stator.mass]/1e3, '-o')
+stator_mass = [design_table.stator.mass]/1e3;
+
+plot(pole(1:6), stator_mass(1:6), ':o')
+hold on
+plot(pole(7:14), stator_mass(7:14), ':^r')
+
 ylabel('Total Mass of Stator (t)', 'FontSize', 12)
-ylim([0 20])
+ylim([0 30])
 grid on
 box on
 
-% %Efficiency
-% nexttile
-% plot([design_table.machine.Npole], [design_table.machine.efficiency]*100, '-o')
-% ylabel('Efficiency (%)')
-% ylim([90 100])
-% grid on
 
 %Stator Current Density
 nexttile
-plot([design_table.machine.Npole], [design_table.stator.current_density], '-o')
+current_density =  [design_table.stator.current_density];
+
+plot(pole(1:6), current_density(1:6), ':o')
+hold on
+plot(pole(7:14), current_density(7:14), ':^r')
+
 ylabel('Stator Current Density (A/mm2)', 'FontSize', 12)
 ylim([0 8])
 grid on
@@ -94,9 +109,24 @@ box on
 
 %Airgap Flux Density
 nexttile
-plot([design_table.machine.Npole], [design_table.stator.B_max], '-o')
+
+flux_density =  [design_table.stator.B_max];
+
+plot(pole(1:6), flux_density(1:6), ':o')
+hold on
+plot(pole(7:14), flux_density(7:14), ':^r')
+
+%plot([design_table.machine.Npole], [design_table.stator.B_max], '-o')
 ylabel('Airgap Flux Density (T), top 10%', 'FontSize', 12)
 ylim([0 2.5])
 grid on
 box on
 
+% Set common xticks for all subplots
+%set([ax1 ax2 ax3 ax4], 'XTick', [40 80 120 160]);
+
+ax = findall(gcf,'Type','axes');   % get all axes in the current figure
+set(ax,'XTick',[40 80 120 160]);   % apply to all
+set(ax,'XLim',[0 165]);   % apply to all
+% Adjust figure size for publication
+%set(gcf, 'Units', 'centimeters', 'Position', [5 5 18 14]); % width=18cm, height=14cm
