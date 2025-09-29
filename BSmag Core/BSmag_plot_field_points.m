@@ -19,7 +19,21 @@ function [] = BSmag_plot_field_points(BSmag,X,Y,Z)
 %---------------------------------------------------
 
 %Plot M (where we want to calculate the field)
-% Plots can be omitted to for a shorter computation time
-% figure(1)
-% 	plot3(X(:),Y(:),Z(:),'k.')
-% axis  tight
+
+%Only plot figures if plot_figures = 1 
+%if the variable is not defined it the code will generate figures by
+%default plot_figures can be set to 0 to reduce computation time
+
+global plot_figures
+
+if   exist('plot_figures','var') && ~plot_figures
+    %Do not plot figures
+  
+else
+
+    %Plot Figures
+    figure(1)
+	plot3(X(:),Y(:),Z(:),'k.')
+    axis  tight
+
+end

@@ -6,6 +6,15 @@
 %  AUTHOR:    Ozan Keysan (09/2025)
 %----------------------------------------------------
 
+%% Plot Options
+% Disabling plots can make the optimization a lot faster
+% It is recommended to make this variable zero for optimization loop
+% but it can be set to 1 to generate post processing figures
+
+global plot_figures
+plot_figures = 1; % If 0 do not plot figures, if = 1 then plot figures 
+
+%% Variables
 %Read solution variable from optimization outputs
 %Input arrangements
 %Make sure they are aligned with the actual optimization cost function

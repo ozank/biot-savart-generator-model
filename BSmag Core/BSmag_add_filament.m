@@ -31,8 +31,22 @@ BSmag.filament(n).dGamma = dGamma;
 BSmag.Nfilament = n;
 
 %Plot P (where there is a current source)
-%Commented out to reduce optimization time
-% figure(1)
-% 	%plot3(Gamma(:,1),Gamma(:,2),Gamma(:,3),'-b', 'LineWidth',2)
-%     plot3(Gamma(:,1),Gamma(:,2),Gamma(:,3),'-r', 'LineWidth',2)
-% axis tight
+
+%Only plot figures if plot_figures = 1 
+%if the variable is not defined it the code will generate figures by
+%default plot_figures can be set to 0 to reduce computation time
+
+global plot_figures
+
+if   exist('plot_figures','var') && ~plot_figures
+    %Do not plot figures
+  
+else
+
+    %Plot Figures
+    figure(1)
+	%plot3(Gamma(:,1),Gamma(:,2),Gamma(:,3),'-b', 'LineWidth',2)
+    plot3(Gamma(:,1),Gamma(:,2),Gamma(:,3),'-r', 'LineWidth',2)
+    axis tight
+
+end

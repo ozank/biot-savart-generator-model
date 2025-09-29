@@ -20,7 +20,21 @@ BSmag.Nfilament = 0; %Number of source filament
 
 % Open default figure to plot source points and field points
 
-%removed to reduce computation time
-% figure(1), hold on, grid on, box on, axis equal
-% xlabel('x [m]'), ylabel('y [m]'), zlabel('z [m]')
-% view(3), axis tight
+%Only plot figures if plot_figures = 1 
+%if the variable is not defined it the code will generate figures by
+%default plot_figures can be set to 0 to reduce computation time
+
+global plot_figures
+
+if   exist('plot_figures','var') && ~plot_figures
+    %Do not plot figures
+  
+else
+
+    %Plot Figures
+    figure(1), hold on, grid on, box on, axis equal
+    xlabel('x [m]'), ylabel('y [m]'), zlabel('z [m]')
+    view(3), axis tight
+end
+
+

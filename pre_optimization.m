@@ -10,10 +10,18 @@
 %  REQUIRED:  BSmag Toolbox 20150407 (for magnetic field calculations)
 %----------------------------------------------------
 
+%% Plot Options
+% Disabling plots can make the optimization a lot faster
+% It is recommended to make this variable zero for optimization loop
+
+global plot_figures
+plot_figures = 0; % If 0 do not plot figures, if = 1 then plot figures 
+
 %% Initialize Biot Savart Model
 % Clear workspace
 clear all, close all, clc
 BSmag = BSmag_init(); % Initialize BSmag analysis
+
 
 %BIOT SAVART MODEL SETTINGS
 %Discrete steps along coil during, biot savart calculations, has a direct
@@ -40,15 +48,15 @@ number_of_inputs = 9; %Number of optimization inputs
 % 8- machine.Nstacks
 
 %Lower and Upper Bounds for the optimization Inputs
-bounds = [40 40;      % Number of Poles ( the value divided by 4) due to simulation constraints
+bounds = [20 20;      % Number of Poles ( the value divided by 4) due to simulation constraints
           4 8;       % J (current density) A/mm^2
-          0.2 0.5;    % 3- HTS.coil_length
-          100 250;     % 4- HTS.N_turns
-          40 200;     % 5- stator.N_turns
-          0.35 0.45;   % 6- stator.coil_width_to_coil_pitch_ratio
-          0.03 0.05;      % 7- stator.coil_thickness    
+          0.4 0.8;    % 3- HTS.coil_length
+          80 160;     % 4- HTS.N_turns
+          80 150;     % 5- stator.N_turns
+          0.3 0.45;   % 6- stator.coil_width_to_coil_pitch_ratio
+          0.03 0.07;      % 7- stator.coil_thickness    
           5  5;          %8- machine.Nstacks
-          3.5  3.5]          % HTS.R_mean   
+          2  2]          % HTS.R_mean   
 
 % Lower Bounds for optimization inputs
 lower_bounds = bounds(:,1)   % First column assigned to lower bounds
