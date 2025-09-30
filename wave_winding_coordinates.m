@@ -17,8 +17,6 @@
 coil_Z_offset = 0; % coil is placed on X-Y plane, coil Z offset defines Z coordinates
 
 %% TO DO List
-
-% - Adjust the router and Rinner according to filament dimensions
 % - Calculate the mean turn lenght for the single module
 
 %HTS Filament Calculations
@@ -100,13 +98,13 @@ winding_coordinates(5+4*p,:) =  [   R * cosd(angle),
 end
 
 %End of Croyostat point at the other end
-winding_coordinates((machine.Npole_per_module/2)*4+2,:) =   [HTS.R_bottom*cosd(machine.pole_angle*(0.5+(machine.Npole_per_module-1))),
-                                                            HTS.R_bottom*sind(machine.pole_angle*(0.5+(machine.Npole_per_module-1))),
+winding_coordinates((machine.Npole_per_module/2)*4+2,:) =   [filament_HTS.R_bottom*cosd(machine.pole_angle*(0.5+(machine.Npole_per_module-1))),
+                                                            filament_HTS.R_bottom*sind(machine.pole_angle*(0.5+(machine.Npole_per_module-1))),
                                                             coil_Z_offset];
 %Point K
 %Finish at the starting point = point A
-winding_coordinates((machine.Npole_per_module/2)*4+3,:) =    [HTS.R_bottom*cosd(machine.pole_angle*0.5),
-                                                            HTS.R_bottom*sind(machine.pole_angle*0.5),
+winding_coordinates((machine.Npole_per_module/2)*4+3,:) =    [filament_HTS.R_bottom*cosd(machine.pole_angle*0.5),
+                                                            filament_HTS.R_bottom*sind(machine.pole_angle*0.5),
                                                             coil_Z_offset];
 %****************************************
 
