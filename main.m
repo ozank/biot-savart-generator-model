@@ -35,6 +35,11 @@ machine_parameters;      %load machine parameters
 %% Get Material Properties
 material_constants; % Load material constants
 
+%Determine number of data points for airgap flux density calculations
+%Has a direct effect on computation time and accuracy
+data_point_angle= 15;  % number of data points in the tangential directions (through angle)
+data_point_radius = 40; %number of data points in the radial (radius) direction
+
 %% Get Winding coordinates
 
 % It is possible to draw two types of windings: Wave winding and
@@ -51,6 +56,10 @@ if strcmp(HTS.winding_type, 'race_track')  %Draw the race track winding
     % Add windings for the axial race track winding
     plot_axial_race_track_winding;
 
+    %% Flux Per Pole 
+    %Calculate Flux Per Pole
+    calculate_flux_per_pole;  % Outputs flux per pole and maximum B values
+
 else         %Draw wave winding
     %% WAVE WINDING
     %Get Wave Winding Coordinates
@@ -61,21 +70,11 @@ else         %Draw wave winding
     % Add windings for the wave winding
     plot_wave_winding;
 
+    %% Flux Per Pole 
+    %Calculate Flux Per Pole
+    calculate_flux_per_pole_wave_winding; %Flux per pole calculations for the wave winding
+
 end
-
-
-%% Electrical Machine Parameter Estimations
-
-%% Flux Per Pole (with Biot Savart Model)
-
-%Determine number of data points for airgap flux density calculations
-%Has a direct effect on computation time and accuracy
-data_point_angle= 15;  % number of data points in the tangential directions (through angle)
-data_point_radius = 40; %number of data points in the radial (radius) direction
-
-%calculate_flux_per_pole;  % Outputs flux per pole and maximum B values
-
-calculate_flux_per_pole_wave_winding; %Flux per pole calculations for the wave winding
 
 %% Calculate Electrical Parameters
 % Get induced voltage, current, resistance etc
