@@ -9,8 +9,8 @@
 %       Main function and motor dimensions
 % 
 %   Outputs:
-%       Maximum flux per pole for one stator coil (when stator coil is aligned
-% with the HTS field winding
+% Maximum flux per pole (for race track coil) for one stator coil 
+% occurs when stator coil is aligned with the HTS field winding
 %
 
 %Model to model Single Filament Stator Coil Model
@@ -118,8 +118,8 @@ else
     hold on
 
     %to draw boundaries of the stator windings
-    plot(polyshape([filament.R_inner*cosd(filament.angle_min) filament.R_inner*cosd(filament.angle_max) filament.R_outer*cosd(filament.angle_max) filament.R_outer*cosd(filament.angle_min) ] ...
-    ,[filament.R_inner*sind(filament.angle_min) filament.R_inner*sind(filament.angle_max) filament.R_outer*sind(filament.angle_max) filament.R_outer*sind(filament.angle_min)  ]));
+%    plot(polyshape([filament.R_inner*cosd(filament.angle_min) filament.R_inner*cosd(filament.angle_max) filament.R_outer*cosd(filament.angle_max) filament.R_outer*cosd(filament.angle_min) ] ...
+%    ,[filament.R_inner*sind(filament.angle_min) filament.R_inner*sind(filament.angle_max) filament.R_outer*sind(filament.angle_max) filament.R_outer*sind(filament.angle_min)  ]));
 
 end
 

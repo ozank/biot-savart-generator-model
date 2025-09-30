@@ -71,9 +71,11 @@ end
 %Determine number of data points for airgap flux density calculations
 %Has a direct effect on computation time and accuracy
 data_point_angle= 15;  % number of data points in the tangential directions (through angle)
-data_point_radius = 20; %number of data points in the radial (radius) direction
+data_point_radius = 40; %number of data points in the radial (radius) direction
 
-calculate_flux_per_pole;  % Outputs flux per pole and maximum B values
+%calculate_flux_per_pole;  % Outputs flux per pole and maximum B values
+
+calculate_flux_per_pole_wave_winding; %Flux per pole calculations for the wave winding
 
 %% Calculate Electrical Parameters
 % Get induced voltage, current, resistance etc
