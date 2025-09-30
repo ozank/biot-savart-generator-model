@@ -45,12 +45,11 @@ data_point_radius = 40; %number of data points in the radial (radius) direction
 % It is possible to draw two types of windings: Wave winding and
 % conventional race track coils, Please comment out the unwanted type, and
 % use ONLY one of the winding types
-
 if strcmp(HTS.winding_type, 'race_track')  %Draw the race track winding
     %% RACE TRACK COIL WINDING
     %Get Race track axial machine Winding Coordinates 
 
-     axial_winding_coordinates;
+    axial_winding_coordinates;
     Npoles_radial = 6; % Number of modules to be simulated in the radial direction, default 8
  
     % Add windings for the axial race track winding
@@ -61,6 +60,7 @@ if strcmp(HTS.winding_type, 'race_track')  %Draw the race track winding
     calculate_flux_per_pole;  % Outputs flux per pole and maximum B values
 
 else         %Draw wave winding
+
     %% WAVE WINDING
     %Get Wave Winding Coordinates
     
