@@ -20,8 +20,26 @@ coil_Z_offset = 0; % coil is placed on X-Y plane, coil Z offset defines Z coordi
 
 % - Adjust the router and Rinner according to filament dimensions
 % - Calculate the mean turn lenght for the single module
+
+%HTS Filament Calculations
+% Filament is the line that passes through the middle of HTS volume.
+% Double pancake coil is modelled by a single filament.
+% Filament radius passes through the mid plane of double pancake HTS coil
+
+filament_HTS.coil_angle = ((HTS.coil_pitch - HTS.coil_width) / HTS.pole_pitch) * machine.pole_angle;
+
+filament_HTS.R_inner = HTS.R_inner + 0.5 * HTS.coil_width; %[m], inner radius of HTS filament for biot savart model
+filament_HTS.R_outer = HTS.R_outer - 0.5 * HTS.coil_width; %[m], outer radius of HTS filament for biot savart model
+
+%filament bottom connection radius
+filament_HTS.R_bottom = HTS.R_bottom + 0.5 * HTS.coil_width; %[m], inner radius of HTS filament for biot savart model
+
+
 % Be careful the code below calculates mean length per coil not length per
 % module!
+%Filament length for mean HTS (per coil)(for mass/cost calculations)
+%HTS.mean_turn_length = 2*(filament_HTS.R_outer - filament_HTS.R_inner) + 2 * (HTS.coil_pitch - HTS.coil_width); %[m] mean turn length of single HTS coil
+
 %Filament length for mean HTS (per coil)(for mass/cost calculations)
 %HTS.mean_turn_length = 2*(filament_HTS.R_outer - filament_HTS.R_inner) + 2 * (HTS.coil_pitch - HTS.coil_width); %[m] mean turn length of single HTS coil
 
@@ -35,8 +53,8 @@ winding_coordinates = zeros (((machine.Npole_per_module/2)*4+3),3);  %Initialize
 
 %Point A
 %Inner starting point (at bottom radius)
-winding_coordinates(1,:) = [    HTS.R_bottom*cosd(machine.pole_angle*0.5),
-                                HTS.R_bottom*sind(machine.pole_angle*0.5),
+winding_coordinates(1,:) = [    filament_HTS.R_bottom*cosd(machine.pole_angle*0.5),
+                                filament_HTS.R_bottom*sind(machine.pole_angle*0.5),
                                 coil_Z_offset];
 
 %Create poles (depending on the number of poles per cryostat)
@@ -45,7 +63,7 @@ for p = 0:(machine.Npole_per_module/2)-1
 %Point B
 %Inner radius of the first pole
 angle =  machine.pole_angle*(0.5 + 2*p + 0.5 - HTS.pole_inner_ratio*0.5);
-R = HTS.R_inner;
+R = filament_HTS.R_inner;
 
 winding_coordinates(2+4*p,:) =  [   R * cosd(angle),
                                     R * sind(angle),
@@ -54,7 +72,7 @@ winding_coordinates(2+4*p,:) =  [   R * cosd(angle),
 %Point C
 %Outer radius of the first pole
 angle =  machine.pole_angle*(0.5 + 2*p + 0.5 - HTS.pole_outer_ratio*0.5);
-R = HTS.R_outer;
+R = filament_HTS.R_outer;
 
 winding_coordinates(3+4*p,:) =  [   R * cosd(angle),
                                     R * sind(angle),
@@ -63,7 +81,7 @@ winding_coordinates(3+4*p,:) =  [   R * cosd(angle),
 %Point D
 %first pole end at the outer radius
 angle =  machine.pole_angle*(0.5 + 2*p + 0.5 + HTS.pole_outer_ratio*0.5);
-R = HTS.R_outer;
+R = filament_HTS.R_outer;
 
 winding_coordinates(4+4*p,:) =  [   R * cosd(angle),
                                     R * sind(angle),
@@ -73,7 +91,7 @@ winding_coordinates(4+4*p,:) =  [   R * cosd(angle),
 %Point E
 %first pole end at the inner radius
 angle =  machine.pole_angle*(0.5 + 2*p + 0.5 + HTS.pole_inner_ratio*0.5);
-R = HTS.R_inner;
+R = filament_HTS.R_inner;
 
 winding_coordinates(5+4*p,:) =  [   R * cosd(angle),
                                     R * sind(angle),
@@ -100,7 +118,7 @@ end_winding_coordinates = zeros (5,3);  %Initialize default matrix for coordinat
 %pointA
 %Inner radius of the end winding
 angle = 0;
-R = HTS.R_inner;
+R = filament_HTS.R_inner;
 
 end_winding_coordinates(1,:) =  [   R,
                                     0,
@@ -108,7 +126,7 @@ end_winding_coordinates(1,:) =  [   R,
 %pointB
 %Outer radius of the end winding
 angle = 0;
-R = HTS.R_outer;
+R = filament_HTS.R_outer;
 
 end_winding_coordinates(2,:) =  [   R,
                                     0,
@@ -117,7 +135,7 @@ end_winding_coordinates(2,:) =  [   R,
 %pointC
 %Outer radius, outer edge of the end winding
 angle = machine.pole_angle;
-R = HTS.R_outer;
+R = filament_HTS.R_outer;
 
 end_winding_coordinates(3,:) =  [   R * cosd(angle),
                                     0,
@@ -127,7 +145,7 @@ end_winding_coordinates(3,:) =  [   R * cosd(angle),
 %pointD
 %Inner radius, outer edge of the end winding
 angle = machine.pole_angle;
-R = HTS.R_inner;
+R = filament_HTS.R_inner;
 
 end_winding_coordinates(4,:) =  [   R * cosd(angle),
                                     0,
@@ -137,7 +155,7 @@ end_winding_coordinates(4,:) =  [   R * cosd(angle),
 %pointE = point A
 %Inner radius of the end winding
 angle = 0;
-R = HTS.R_inner;
+R = filament_HTS.R_inner;
 
 end_winding_coordinates(5,:) =  [   R,
                                     0,

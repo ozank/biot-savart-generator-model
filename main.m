@@ -41,32 +41,37 @@ material_constants; % Load material constants
 % conventional race track coils, Please comment out the unwanted type, and
 % use ONLY one of the winding types
 
-%% WAVE WINDING
-%Get Wave Winding Coordinates
-% comment out below for wave winding coil
-%wave_winding_coordinates;
-%Nmodules_radial = 3; % Number of modules to be simulated in the radial direction, default 3
+if strcmp(HTS.winding_type, 'race_track')  %Draw the race track winding
+    %% RACE TRACK COIL WINDING
+    %Get Race track axial machine Winding Coordinates 
 
-% Add windings for the wave winding
-%plot_wave_winding;
-
-%% RACE TRACK COIL WINDING
-%Get Race track axial machine Winding Coordinates 
-% comment out below for race track coil
-
- axial_winding_coordinates;
- Npoles_radial = 8; % Number of modules to be simulated in the radial direction, default 8
+     axial_winding_coordinates;
+    Npoles_radial = 6; % Number of modules to be simulated in the radial direction, default 8
  
-% Add windings for the axial race track winding
- plot_axial_race_track_winding;
+    % Add windings for the axial race track winding
+    plot_axial_race_track_winding;
+
+else         %Draw wave winding
+    %% WAVE WINDING
+    %Get Wave Winding Coordinates
+    
+    wave_winding_coordinates;
+    Nmodules_radial = 2; % Number of modules to be simulated in the radial direction, default 3
+
+    % Add windings for the wave winding
+    plot_wave_winding;
+
+end
+
 
 %% Electrical Machine Parameter Estimations
 
 %% Flux Per Pole (with Biot Savart Model)
 
 %Determine number of data points for airgap flux density calculations
-data_point_angle= 20;  % number of data points in the tangential directions (through angle)
-data_point_radius = 50; %number of data points in the radial (radius) direction
+%Has a direct effect on computation time and accuracy
+data_point_angle= 15;  % number of data points in the tangential directions (through angle)
+data_point_radius = 20; %number of data points in the radial (radius) direction
 
 calculate_flux_per_pole;  % Outputs flux per pole and maximum B values
 

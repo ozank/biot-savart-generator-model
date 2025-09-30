@@ -45,6 +45,12 @@ stator.R_mean = HTS.R_mean;  %can be modified but by default, equal to rotor mea
 %stator.coil_length = 300/1000;  %meters, Straight section length of the stator coils, independent but correlated with HTS.coil_length, stator.R_inner, Stator.R_outer
 stator.coil_length = HTS.coil_length; %make stator length equal to HTS length (temporary)
 
+%% HTS Winding Type
+%Only use one type by commenting out the other one
+%HTS.winding_type = 'race_track'; % HTS rotor winding is conventional trapezoidal race track winding
+HTS.winding_type = 'wave';   %HTS rotor winding is in the shape of wave winding (i.e. potato masher)
+
+
 %% Rotor HTS Parameters and Excitation Current
 HTS.current = 550; %A   HTS Coil Current (DC), per tape
 %HTS.N_turns = 100; %    Number of turns of HTS coil (per layer)
