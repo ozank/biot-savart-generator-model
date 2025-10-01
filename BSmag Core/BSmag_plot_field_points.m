@@ -26,7 +26,7 @@ function [] = BSmag_plot_field_points(BSmag,X,Y,Z)
 
 global plot_figures
 
-if   exist('plot_figures','var') && ~plot_figures
+if   exist('plot_figures','var') && isscalar(plot_figures) && ~plot_figures
     %Do not plot figures
   
 else

@@ -26,15 +26,16 @@ BSmag.Nfilament = 0; %Number of source filament
 
 global plot_figures
 
-if   exist('plot_figures','var') && ~plot_figures
+if   exist('plot_figures','var') && isscalar(plot_figures) && ~plot_figures
     %Do not plot figures
   
 else
 
-    %Plot Figures
+   %Plot Figures
+    disp('printing figures')
     figure(1), hold on, grid on, box on, axis equal
     xlabel('x [m]'), ylabel('y [m]'), zlabel('z [m]')
     view(3), axis tight
-end
 
+end
 

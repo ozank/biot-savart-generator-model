@@ -99,7 +99,7 @@ stator.B_max = mean(maxk(BZ(:), ceil(numel(BZ)*0.1))); %[Tesla], maximum airgap 
 
 global plot_figures
 
-if   exist('plot_figures','var') && ~plot_figures
+if   exist('plot_figures','var') && isscalar(plot_figures) && ~plot_figures
     %Do not plot figures
   
 else

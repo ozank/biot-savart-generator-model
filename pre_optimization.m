@@ -10,16 +10,19 @@
 %  REQUIRED:  BSmag Toolbox 20150407 (for magnetic field calculations)
 %----------------------------------------------------
 
+%% Clear Workspace
+clear all, close all, clc
+
 %% Plot Options
 % Disabling plots can make the optimization a lot faster
 % It is recommended to make this variable zero for optimization loop
 
-global plot_figures
-plot_figures = 0; % If 0 do not plot figures, if = 1 then plot figures 
+%global plot_figures
+
+%plot_figures = 0; % If 0 do not plot figures, if = 1 then plot figures 
 
 %% Initialize Biot Savart Model
-% Clear workspace
-clear all, close all, clc
+
 BSmag = BSmag_init(); % Initialize BSmag analysis
 
 
@@ -56,13 +59,13 @@ bounds = [20 20;      % Number of Poles ( the value divided by 4) due to simulat
           0.3 0.45;   % 6- stator.coil_width_to_coil_pitch_ratio
           0.03 0.07;      % 7- stator.coil_thickness    
           5  5;          %8- machine.Nstacks
-          2  2]          % HTS.R_mean   
+          2  2];          % HTS.R_mean   
 
 % Lower Bounds for optimization inputs
-lower_bounds = bounds(:,1)   % First column assigned to lower bounds
+lower_bounds = bounds(:,1);   % First column assigned to lower bounds
 
 %Upper Bounds for optimization inputs
-upper_bounds = bounds(:,2)   % Second column assigned to upper bounds
+upper_bounds = bounds(:,2);   % Second column assigned to upper bounds
 
 %IntegerConditions
 % Define the parameters that take integer value ( for shorter converge

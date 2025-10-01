@@ -153,7 +153,7 @@ stator.B_max = (stator.B_max_positive - stator.B_max_negative)/2;
 
 global plot_figures
 
-if   exist('plot_figures','var') && ~plot_figures
+if   exist('plot_figures','var') && isscalar(plot_figures) && ~plot_figures
     %Do not plot figures
   
 else
