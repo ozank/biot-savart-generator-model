@@ -32,7 +32,7 @@ if   exist('plot_figures','var') && isscalar(plot_figures) && ~plot_figures
 else
 
    %Plot Figures
-    disp('printing figures')
+   % disp('printing figures')
     figure(1), hold on, grid on, box on, axis equal
     xlabel('x [m]'), ylabel('y [m]'), zlabel('z [m]')
     view(3), axis tight

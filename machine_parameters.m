@@ -48,8 +48,8 @@ stator.coil_length = HTS.coil_length; %make stator length equal to HTS length (t
 %% HTS Winding Type
 %Only use one type by commenting out the other one
 
-%HTS.winding_type = 'race_track'; % HTS rotor winding is conventional trapezoidal race track winding
-HTS.winding_type = 'wave';   %HTS rotor winding is in the shape of wave winding (i.e. potato masher)
+HTS.winding_type = 'race_track'; % HTS rotor winding is conventional trapezoidal race track winding
+%HTS.winding_type = 'wave';   %HTS rotor winding is in the shape of wave winding (i.e. potato masher)
 
 
 %% Rotor HTS Parameters and Excitation Current

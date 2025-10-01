@@ -17,9 +17,8 @@ clear all, close all, clc
 % Disabling plots can make the optimization a lot faster
 % It is recommended to make this variable zero for optimization loop
 
-%global plot_figures
-
-%plot_figures = 0; % If 0 do not plot figures, if = 1 then plot figures 
+global plot_figures
+plot_figures = 0; % If 0 do not plot figures, if = 1 then plot figures 
 
 %% Initialize Biot Savart Model
 
