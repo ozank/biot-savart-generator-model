@@ -108,11 +108,11 @@ BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % shows the field points plane
 data_point_half = size(BZ,2)/2; %find the data size
 
 % Positive cycle of the stator - pole alignment
-stator.flux_per_pole_positive = sum (BZ(:,1:data_point_half) .* R_M(:,1:data_point_half) *d_R * d_ANGLE*(pi/180), "all")   %[Wb], Maximum flux in the stator coils
+stator.flux_per_pole_positive = sum (BZ(:,1:data_point_half) .* R_M(:,1:data_point_half) *d_R * d_ANGLE*(pi/180), "all");   %[Wb], Maximum flux in the stator coils
 % int (Bz.dA) in polar coordinates,
 
 % Negative cycle of the stator - pole alignment
-stator.flux_per_pole_negative = sum (BZ(:,data_point_half+1 : end) .* R_M(:,data_point_half+1 : end) *d_R * d_ANGLE*(pi/180), "all")   %[Wb], Maximum flux in the stator coils
+stator.flux_per_pole_negative = sum (BZ(:,data_point_half+1 : end) .* R_M(:,data_point_half+1 : end) *d_R * d_ANGLE*(pi/180), "all");   %[Wb], Maximum flux in the stator coils
 % int (Bz.dA) in polar coordinates,
 
 %For induced voltage calculations

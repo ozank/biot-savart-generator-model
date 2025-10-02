@@ -52,7 +52,7 @@ else
 
 %Length of the loop (1 turn) in one wave winding module
 
-HTS.module_turn_length =  (filament_HTS.R_inner - filament_HTS.R_bottom) * 2 ... % From points A to B (including on each side)
+HTS.module_turn_length = (filament_HTS.R_inner - filament_HTS.R_bottom) * 2 ... % From points A to B (including on each side)
                           + sqrt((winding_coordinates(3,1) - winding_coordinates(4,1))^2 + (winding_coordinates(3,2) - winding_coordinates(4,2))^2 ) * machine.Npole_per_module ... %Points B and C of the wave winding (vertical connections), calculate from the Hypotenuse length
                           + HTS.pole_outer_ratio * machine.pole_angle * (pi/180) * filament_HTS.R_outer * (machine.Npole_per_module/2) ...  %outer edge on the Router, between points C and D
                           + HTS.pole_inner_ratio * machine.pole_angle * (pi/180) * filament_HTS.R_inner * (machine.Npole_per_module/2 - 1) ...  %innerr edge on the Rinner, between points E and F

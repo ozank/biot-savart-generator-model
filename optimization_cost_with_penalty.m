@@ -42,28 +42,55 @@ stator.coil_width_to_coil_pitch_ratio = inputs(6);
 stator.coil_thickness = inputs(7);
 machine.Nstacks = inputs(8);
 HTS.R_mean = inputs(9);
+%Extra parameters for the wave winding
+HTS.distance_inner_to_bottom = inputs(10);
+HTS.pole_outer_ratio = inputs(11);
+HTS.pole_inner_ratio = inputs(12);
 
 %% Get Machine Parameters
 % Don't forget to comment out any input parameters.
 machine_parameters;      %load machine parameters
 
-%% RACE TRACK COIL WINDING
-%Get Race track axial machine Winding Coordinates 
-
-axial_winding_coordinates;
-Npoles_radial = 8; % Number of modules to be simulated in the radial direction, default 8
- 
-% Add windings for the axial race track winding
-plot_axial_race_track_winding;
-
-%% Electrical Machine Parameter Estimations
-
-%% Flux Per Pole (with Biot Savart Model)
 %Determine number of data points for airgap flux density calculations
-data_point_angle= 20;  % number of data points in the tangential directions (through angle)
-data_point_radius = 50; %number of data points in the radial (radius) direction
+%Has a direct effect on computation time and accuracy
+data_point_angle= 15;  % number of data points in the tangential directions (through angle)
+data_point_radius = 40; %number of data points in the radial (radius) direction
 
-calculate_flux_per_pole;  % Outputs flux per pole and maximum B values
+%% Get Winding coordinates
+
+% It is possible to draw two types of windings: Wave winding and
+% conventional race track coils, Please comment out the unwanted type, and
+% use ONLY one of the winding types
+if strcmp(HTS.winding_type, 'race_track')  %Draw the race track winding
+
+    %% RACE TRACK COIL WINDING
+    %Get Race track axial machine Winding Coordinates 
+
+    axial_winding_coordinates;
+    Npoles_radial = 8; % Number of modules to be simulated in the radial direction, default 8
+ 
+    % Add windings for the axial race track winding
+    plot_axial_race_track_winding;
+
+    %% Electrical Machine Parameter Estimations
+    calculate_flux_per_pole;  % Outputs flux per pole and maximum B values
+
+    else         %Draw wave winding
+
+    %% WAVE WINDING
+    %Get Wave Winding Coordinates
+    
+    wave_winding_coordinates;
+    Nmodules_radial = 2; % Number of modules to be simulated in the radial direction, default 3
+
+    % Add windings for the wave winding
+    plot_wave_winding;
+
+    %% Flux Per Pole 
+    %Calculate Flux Per Pole
+    calculate_flux_per_pole_wave_winding; %Flux per pole calculations for the wave winding
+
+end
 
 %% Calculate Electrical Parameters
 % Get induced voltage, current, resistance etc

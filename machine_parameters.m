@@ -48,8 +48,8 @@ stator.coil_length = HTS.coil_length; %make stator length equal to HTS length (t
 %% HTS Winding Type
 %Only use one type by commenting out the other one
 
-HTS.winding_type = 'race_track'; % HTS rotor winding is conventional trapezoidal race track winding
-%HTS.winding_type = 'wave';   %HTS rotor winding is in the shape of wave winding (i.e. potato masher)
+%HTS.winding_type = 'race_track'; % HTS rotor winding is conventional trapezoidal race track winding
+HTS.winding_type = 'wave';   %HTS rotor winding is in the shape of wave winding (i.e. potato masher)
 
 
 %% Rotor HTS Parameters and Excitation Current
@@ -133,15 +133,15 @@ coil_to_coil_gap = machine.airgap_HTS_to_HTS + HTS.coil_thickness; %[m], HTS fil
 HTS.coil_angle = (HTS.coil_pitch / HTS.pole_pitch) * machine.pole_angle; %[degrees], coil span angle considering the gaps between adjacent coils
 
 %% Wave Winding Shape Adjustments
-HTS.pole_outer_ratio = 1; %pole ratio of the outer pole edge, default to 1  0 < value < 2
-HTS.pole_inner_ratio = 1; %pole ratio of the outer pole edge, default to 1  0 < value < 2
+%HTS.pole_outer_ratio = 1; %pole ratio of the outer pole edge, default to 1  0 < value < 2
+%HTS.pole_inner_ratio = 1; %pole ratio of the outer pole edge, default to 1  0 < value < 2
 
 machine.Npole_per_module = 8; %Number of poles per cryostat module, default to 8, should be an even number
 
 %Only for the wave winding type machine, radius of the wave winding bottom
 %return path 
-%TO BE ADJUSTED!
-HTS.R_bottom = HTS.R_inner - 0.3;   %meter, Bottom radius of the HTS rotor for wave winding (to be adjusted)
+%HTS.distance_inner_to_bottom = 0.3;  %meter, distance between HTS.R_inner and HTS.R_bottom, ONLY for the wave winding type
+HTS.R_bottom = HTS.R_inner - HTS.distance_inner_to_bottom;   %meter, Bottom radius of the HTS rotor for wave winding (to be adjusted)
 
 
 %% End Winding Coordinates

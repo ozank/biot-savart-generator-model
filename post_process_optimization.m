@@ -29,6 +29,11 @@ stator.coil_width_to_coil_pitch_ratio = solution(6);
 stator.coil_thickness = solution(7);
 machine.Nstacks = solution(8);
 HTS.R_mean = solution(9);
+%extra parameters for the wave winding
+%can be commented out for the race track winding
+HTS.distance_inner_to_bottom = solution(10);
+HTS.pole_outer_ratio = solution(11);
+HTS.pole_inner_ratio = solution(12);
 
 %% MAIN Function Call
 
