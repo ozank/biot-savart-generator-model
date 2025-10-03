@@ -17,12 +17,15 @@
 coil_Z_offset = 0; % coil is placed on X-Y plane, coil Z offset defines Z coordinates
 
 %% TO DO List
-% - Calculate the mean turn lenght for the single module
+
 
 %HTS Filament Calculations
 % Filament is the line that passes through the middle of HTS volume.
 % Double pancake coil is modelled by a single filament.
 % Filament radius passes through the mid plane of double pancake HTS coil
+
+%to be used for end winding calculations
+filament_HTS.coil_angle = ((HTS.coil_pitch - HTS.coil_width) / HTS.pole_pitch) * machine.pole_angle;
 
 filament_HTS.R_inner = HTS.R_inner + 0.5 * HTS.coil_width; %[m], inner radius of HTS filament for biot savart model
 filament_HTS.R_outer = HTS.R_outer - 0.5 * HTS.coil_width; %[m], outer radius of HTS filament for biot savart model

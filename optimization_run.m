@@ -61,14 +61,14 @@ number_of_inputs = 12; %Number of optimization inputs
 
 %Lower and Upper Bounds for the optimization Inputs
 bounds = [10 10;      % Number of Poles/4 ( the value divided by 4) due to simulation constraints
-          4 8;       % J (current density) A/mm^2
+          4 7;       % J (current density) A/mm^2
           0.4 0.8;    % 3- HTS.coil_length
-          80 160;     % 4- HTS.N_turns
-          80 150;     % 5- stator.N_turns
+          160 320;     % 4- HTS.N_turns
+          50 150;     % 5- stator.N_turns
           0.3 0.45;   % 6- stator.coil_width_to_coil_pitch_ratio
           0.03 0.07;      % 7- stator.coil_thickness    
           5  5;          %8- machine.Nstacks
-          2  2; %];          % 9- HTS.R_mean   
+          2.5  2.5; %];          % 9- HTS.R_mean   
 %Extra parameters for the wave winding type
           0.2 0.5;   % 10- HTS.distance_inner_to_bottom
           0.5 1.5;   % 11- HTS.pole_outer_ratio;

@@ -36,7 +36,13 @@ end
 
 end
 
-%End Winding Coil Loops
+%% End Winding Coil Loops
+
+%% Vertical End Winding Coils
+% for wnd winding type = 1 or = 3, do not plot if there is no end winding
+
+if end_winding_type > 0 % only plot vertical end winding types for types 1 or 3 
+
 
 for n = 1:(machine.Npole_per_module/2 * Nmodules_radial)  % Add end windings on one side with half of the pole number per module * module number
 
@@ -57,4 +63,95 @@ end_winding_coordinates_rotated(:,2) = end_winding_coordinates(:,2)*cosd(rotatio
 end_winding_coordinates_rotated(:,3) = -1 * end_winding_coordinates_rotated(:,3);     % Take symmetry over X-Y plane, by multlipying Z coordinate by -1
 [BSmag] = BSmag_add_filament(BSmag,end_winding_coordinates_rotated,I,dGamma2);
 
+end
+
+else
+    %do nothing
+end
+
+%% End Winding Coil Loops
+% (Diagonal  ones (if used), but angle can be adjusted)
+
+if end_winding_type == 3 % only plot end winding types if the diagonal winding type is selected
+
+for n = 1:(machine.Npole_per_module/2 * Nmodules_radial)  % Add end windings on one side with half of the pole number per module * module number
+
+%% 1st Rotated End coil
+%Rotate initial end winding coordinates
+end_winding_coordinates_temp = end_winding_coordinates;
+
+%first bring the coil midplane to z=0 plane
+z_offset = min(end_winding_coordinates_temp(1:end-1,3)); %Get the average Z-coordinates, except the last one as it is identical with the first one
+
+%move coil to z=0 plane
+end_winding_coordinates_temp(:,3) = end_winding_coordinates_temp(:,3) - z_offset;
+
+%rotation angle, rotate around Y axis
+end_winding_coordinates_rotated(:,1) = end_winding_coordinates_temp(:,1);
+end_winding_coordinates_rotated(:,2) = end_winding_coordinates_temp(:,2)*cosd(end_winding_rotation_angle) + end_winding_coordinates_temp(:,3)*sind(end_winding_rotation_angle);
+end_winding_coordinates_rotated(:,3) = end_winding_coordinates_temp(:,3)*cosd(end_winding_rotation_angle) - end_winding_coordinates_temp(:,2)*sind(end_winding_rotation_angle);
+
+%move to z position aligned with the vertical end coils (i.e minimum z of
+%the vertical end coil)
+end_winding_coordinates_rotated(:,3) = end_winding_coordinates_rotated(:,3) + (min(end_winding_coordinates(:,3))-min(end_winding_coordinates_rotated(:,3)));
+
+%radially rotate so that aligned with the coils in the stacks
+rotation_angle2 = (2*n-1) * machine.pole_angle - 0.5*(filament_HTS.coil_angle);
+
+%Rotate initial end winding coordinates
+end_winding_coordinates_temp = end_winding_coordinates_rotated;
+
+%rotation angle
+end_winding_coordinates_rotated(:,1) = end_winding_coordinates_temp(:,1)*cosd(rotation_angle2) - end_winding_coordinates_temp(:,2)*sind(rotation_angle2);
+end_winding_coordinates_rotated(:,2) = end_winding_coordinates_temp(:,2)*cosd(rotation_angle2) + end_winding_coordinates_temp(:,1)*sind(rotation_angle2);
+end_winding_coordinates_rotated(:,3) = end_winding_coordinates_temp(:,3);
+
+%Add End Winding Coil
+[BSmag] = BSmag_add_filament(BSmag,end_winding_coordinates_rotated,I,dGamma2);
+
+%add the other end coil (mirror over the Z-axis)
+end_winding_coordinates_rotated(:,3) = -1 * end_winding_coordinates_rotated(:,3);     % Take symmetry over X-Y plane, by multlipying Z coordinate by -1
+[BSmag] = BSmag_add_filament(BSmag,end_winding_coordinates_rotated,I,dGamma2);
+
+
+%% 2nd Rotated End coil
+%Rotate initial end winding coordinates
+end_winding_coordinates_temp = end_winding_coordinates;
+
+%first bring the coil midplane to z=0 plane
+z_offset = min(end_winding_coordinates_temp(1:end-1,3)); %Get the average Z-coordinates, except the last one as it is identical with the first one
+
+%move coil to z=0 plane
+end_winding_coordinates_temp(:,3) = end_winding_coordinates_temp(:,3) - z_offset;
+
+%rotation angle, rotate around Y axis
+end_winding_coordinates_rotated(:,1) = end_winding_coordinates_temp(:,1);
+end_winding_coordinates_rotated(:,2) = end_winding_coordinates_temp(:,2)*cosd(-end_winding_rotation_angle) + end_winding_coordinates_temp(:,3)*sind(-end_winding_rotation_angle);
+end_winding_coordinates_rotated(:,3) = end_winding_coordinates_temp(:,3)*cosd(-end_winding_rotation_angle) - end_winding_coordinates_temp(:,2)*sind(-end_winding_rotation_angle);
+
+%move to z position aligned with the vertical end coils (i.e minimum z of
+%the vertical end coil)
+end_winding_coordinates_rotated(:,3) = end_winding_coordinates_rotated(:,3) + (min(end_winding_coordinates(:,3))-min(end_winding_coordinates_rotated(:,3)));
+
+%rotate so that aligned with the coils in the stacks
+rotation_angle2 = (2*n-1) * machine.pole_angle - machine.pole_angle +0.5 * filament_HTS.coil_angle;
+
+%Rotate initial end winding coordinates
+end_winding_coordinates_temp = end_winding_coordinates_rotated;
+
+%rotation angle
+end_winding_coordinates_rotated(:,1) = end_winding_coordinates_temp(:,1)*cosd(rotation_angle2) - end_winding_coordinates_temp(:,2)*sind(rotation_angle2);
+end_winding_coordinates_rotated(:,2) = end_winding_coordinates_temp(:,2)*cosd(rotation_angle2) + end_winding_coordinates_temp(:,1)*sind(rotation_angle2);
+end_winding_coordinates_rotated(:,3) = end_winding_coordinates_temp(:,3);
+
+%Add End Winding Coil
+[BSmag] = BSmag_add_filament(BSmag,end_winding_coordinates_rotated,I,dGamma2);
+
+%add the other end coil (mirror over the Z-axis)
+end_winding_coordinates_rotated(:,3) = -1 * end_winding_coordinates_rotated(:,3);     % Take symmetry over X-Y plane, by multlipying Z coordinate by -1
+[BSmag] = BSmag_add_filament(BSmag,end_winding_coordinates_rotated,I,dGamma2);
+
+end
+else
+    %do nothing
 end

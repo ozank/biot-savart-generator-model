@@ -78,11 +78,10 @@ else
 end
 
 
-%% End Winding Coil Loops (Diagonal  ones (if used), but angle can be adjusted)
-%rotation angle around Y-axis
-%end_winding_rotation_angle = 60;
+%% End Winding Coil Loops
+% (Diagonal  ones (if used), but angle can be adjusted)
 
-if end_winding_type == 3 % only plot end winding types id the diagonal winding type is selected
+if end_winding_type == 3 % only plot end winding types if the diagonal winding type is selected
 
 for n = 1:( Npoles_radial/2)  % Add end windings on one side with half of the pole number per module * module number
 

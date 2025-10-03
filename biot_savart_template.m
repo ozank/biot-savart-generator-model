@@ -80,62 +80,62 @@ material_constants; % Load material constants
  [X_M,Y_M] = pol2cart(ANGLE_M,R_M);
  Z_M = zeros(data_point_radius+1,data_point_angle+1); % z [m] 
 
-%% Solution SPace B: Cylindrical Surface at a Specific Radius
+% Solution SPace B: Cylindrical Surface at a Specific Radius
 
-% %Solution Space 
-% R = HTS.R_mean;  % Radius of the cylindrical surface
-% 
-% Z_min = -0.4;  %Solution space minimum Z point
-% Z_max = 0.4; %Solution space maximum Z point
-% 
-% angle_offset = 6; %Solution space starting point
-% angle_span = 12; % Solution angle span (degrees)
-% 
-% data_point_angle= 25;  % number of data points in the tangential directions (through angle)
-% data_point_radius = 50; %number of data points in the Z direction
-% 
-% r_M = linspace (R, R, data_point_radius+1);  %Constant R values
-% angle_M = linspace (angle_offset,angle_offset + angle_span, data_point_angle+1);
-% 
-% %create polar coordinate points
-% [R_M,ANGLE_M] = ndgrid(r_M,angle_M * (pi()/180));
-% 
-% %Convert from polar coordinates to cartesian points
-% [X_M,Y_M] = pol2cart(ANGLE_M,R_M);
-% 
-% z_M = linspace (Z_min,Z_max, data_point_radius+1);
-% Z_M = repmat(z_M,  data_point_angle+1,1)';
+%Solution Space 
+R = HTS.R_mean;  % Radius of the cylindrical surface
 
-%% BIOT SAVART ANALYSIS RUN
-% Biot-Savart Integration
+Z_min = -0.4;  %Solution space minimum Z point
+Z_max = 0.4; %Solution space maximum Z point
+
+angle_offset = 6; %Solution space starting point
+angle_span = 12; % Solution angle span (degrees)
+
+data_point_angle= 25;  % number of data points in the tangential directions (through angle)
+data_point_radius = 50; %number of data points in the Z direction
+
+r_M = linspace (R, R, data_point_radius+1);  %Constant R values
+angle_M = linspace (angle_offset,angle_offset + angle_span, data_point_angle+1);
+
+%create polar coordinate points
+[R_M,ANGLE_M] = ndgrid(r_M,angle_M * (pi()/180));
+
+%Convert from polar coordinates to cartesian points
+[X_M,Y_M] = pol2cart(ANGLE_M,R_M);
+
+z_M = linspace (Z_min,Z_max, data_point_radius+1);
+Z_M = repmat(z_M,  data_point_angle+1,1)';
+
+% BIOT SAVART ANALYSIS RUN
+Biot-Savart Integration
  [BSmag,X,Y,Z,BX,BY,BZ] = BSmag_get_B(BSmag,X_M,Y_M,Z_M);
+
+%% Post Processing 
+BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % -> shows the field point line
+
+% Plot B/|B|
+figure(1)
+    normB=sqrt(BX.^2+BY.^2+BZ.^2);
+    %quiver3(X,Y,Z,BX./normB,BY./normB,BZ./normB,'r')
+    quiver3(X,Y,Z,BX./normB,BY./normB,BZ./normB,1,'b')
+    % hold on
+ %contour(X,Z,normB)
+ axis equal
+% hold off
+xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
 % 
-% %% Post Processing 
-% BSmag_plot_field_points(BSmag,X_M,Y_M,Z_M); % -> shows the field point line
-% 
-% % Plot B/|B|
-% figure(1)
-%     normB=sqrt(BX.^2+BY.^2+BZ.^2);
-%     %quiver3(X,Y,Z,BX./normB,BY./normB,BZ./normB,'r')
-%     quiver3(X,Y,Z,BX./normB,BY./normB,BZ./normB,1,'b')
-%     % hold on
-%  %contour(X,Z,normB)
-%  axis equal
-% % hold off
-% xlabel ('x [m]'), ylabel ('y [m]'), title ('Bz [T]')
-% % 
-% 
-% Plot Bz on the plane
-% figure(2), hold on, box on, grid on
-%     contourf(R_M.*sin(ANGLE_M), Z, sqrt(BX.^2+BY.^2+BZ.^2)), colorbar
-% xlabel ('x [m]'), ylabel ('y [m]'), title ('Bmag [T]')
-% 
-% 
-%
-% figure(3), hold on, box on, grid on
-%     contourf(R_M.*sin(ANGLE_M), Z, sqrt((BX.*sin(ANGLE_M)).^2 + (BY.*cos(ANGLE_M)).^2)), colorbar
-%     axis equal
-% xlabel ('x [m]'), ylabel ('y [m]'), title ('B_tangential [T]')
+
+Plot Bz on the plane
+figure(2), hold on, box on, grid on
+    contourf(R_M.*sin(ANGLE_M), Z, sqrt(BX.^2+BY.^2+BZ.^2)), colorbar
+xlabel ('x [m]'), ylabel ('y [m]'), title ('Bmag [T]')
+
+
+
+figure(3), hold on, box on, grid on
+    contourf(R_M.*sin(ANGLE_M), Z, sqrt((BX.*sin(ANGLE_M)).^2 + (BY.*cos(ANGLE_M)).^2)), colorbar
+    axis equal
+xlabel ('x [m]'), ylabel ('y [m]'), title ('B_tangential [T]')
 
 
 % Plot Bz on the plane
