@@ -31,8 +31,8 @@ dGamma2 = 1e-2; % filament max discretization step [m], default to 1 cm
 
 %% Flux Per Pole (for the Biot Savart Model)
 %Determine number of data points for airgap flux density calculations
-data_point_angle= 20;  % number of data points in the tangential directions (through angle)
-data_point_radius = 50; %number of data points in the radial (radius) direction
+data_point_angle= 15;  % number of data points in the tangential directions (through angle)
+data_point_radius = 40; %number of data points in the radial (radius) direction
 
 %% Get Material Properties
 material_constants; % Load material constants
@@ -60,19 +60,19 @@ number_of_inputs = 12; %Number of optimization inputs
 %12 - HTS.pole_inner_ratio;
 
 %Lower and Upper Bounds for the optimization Inputs
-bounds = [10 10;      % Number of Poles/4 ( the value divided by 4) due to simulation constraints
+bounds = [8 15;      % Number of Poles/4 ( the value divided by 4) due to simulation constraints
           4 7;       % J (current density) A/mm^2
-          0.4 0.8;    % 3- HTS.coil_length
-          160 320;     % 4- HTS.N_turns
-          50 150;     % 5- stator.N_turns
-          0.3 0.45;   % 6- stator.coil_width_to_coil_pitch_ratio
-          0.03 0.07;      % 7- stator.coil_thickness    
-          5  5;          %8- machine.Nstacks
-          2.5  2.5; %];          % 9- HTS.R_mean   
+          0.6 1.2;    % 3- HTS.coil_length
+          80 160;     % 4- HTS.N_turns
+          60 150;     % 5- stator.N_turns
+          0.35 0.45;   % 6- stator.coil_width_to_coil_pitch_ratio
+          0.03 0.05;      % 7- stator.coil_thickness    
+          3  3;          %8- machine.Nstacks
+          3  3; %];          % 9- HTS.R_mean   
 %Extra parameters for the wave winding type
           0.2 0.5;   % 10- HTS.distance_inner_to_bottom
-          0.5 1.5;   % 11- HTS.pole_outer_ratio;
-          0.5 1.5];  %12 - HTS.pole_inner_ratio;
+          0.8 1.2;   % 11- HTS.pole_outer_ratio;
+          0.8 1.2];  %12 - HTS.pole_inner_ratio;
 
 
 % Lower Bounds for optimization inputs
