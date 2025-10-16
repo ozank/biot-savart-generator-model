@@ -147,7 +147,7 @@ HTS.R_bottom = HTS.R_inner - HTS.distance_inner_to_bottom;   %meter, Bottom radi
 %% End Winding Coordinates
 % To be modified Refer to Figure
 % Rotation angle of the end winding coils
-end_winding_type = 3; %End winding type: 0= no end winding, 1 = only vertical, 3 = vertical with diagonal ones (three in total)
+end_winding_type = 0; %End winding type: 0= no end winding, 1 = only vertical, 3 = vertical with diagonal ones (three in total)
 end_winding_rotation_angle= 45;
 
 end_winding_gap = 0.1;   %Z distance from the last stage of coils (the name can be modified)
