@@ -110,36 +110,50 @@ calculate_mass_cost;
 %% Penalty Functions
 
 %Limits for Penalty
-limit.efficiency = 0.95;   % Minimum required efficiency
-limit.P_output = 20e6;      % [W], Required power output
+limit.efficiency = 0.99;   % Minimum required efficiency
+limit.P_output = 2e6;      % [W], Required power output
+%Extra Limits
+limit.Vphase_max = 1200;  %[Vrms] per phase voltage
 
 %reset penalties
 penalty.efficiency = 0; 
 penalty.P_output = 0; 
+penalty.V_phase = 0;
 penalty.total = 0; 
 
 %Efficiency Limit Penalty
 if (machine.efficiency < limit.efficiency)
-    penalty.efficiency = 1e10 * (penalty.efficiency - machine.efficiency)^2;
+    penalty.efficiency = 1e10 * (limit.efficiency - machine.efficiency)^2;
 else
     %penalty.efficiency = 0; 
 end    
 
 %Power Output Limit Penalty
 if (machine.P_output < limit.P_output)
-    penalty.P_output = 1 * (penalty.P_output - machine.P_output)^2;
+    penalty.P_output = 1 * (limit.P_output - machine.P_output)^2;
 else
     %penalty.P_output = 0; 
+end    
+
+%Phase Voltage Limit
+if (stator.induced_voltage_per_phase > limit.Vphase_max)
+    penalty.V_phase = 1e2 * (limit.Vphase_max - stator.induced_voltage_per_phase)^2;
+else
+    %penalty.V_phase = 0; 
 end    
 
 
 %% Overall Penalty Values
 
-penalty.total = penalty.efficiency + penalty.P_output;
+penalty.total = penalty.efficiency + penalty.P_output + penalty.V_phase;
 
 %Objective Function
-
+%Minimum Material Cost
 cost = HTS.cost + stator.cost + penalty.total;
+
+%Minimum Active Material Mass
+%cost = HTS.mass + stator.mass + penalty.total;
+
 
 %Close all figures
 close all

@@ -21,7 +21,7 @@
 %machine.Npole = 120;                        % Number of Poles
 machine.pole_angle = 360 / machine.Npole;   % One pole pitch angle in degrees
 
-machine.Nrpm = 1500;                          %Rated rotational speed of the generator (RPM)
+machine.Nrpm = 10;                          %Rated rotational speed of the generator (RPM)
 machine.f_electrical = (machine.Nrpm /60)* (machine.Npole/2);   %Machine induced voltage frequency (Hz)
 
 %Number of axial stacks
@@ -48,8 +48,8 @@ stator.coil_length = HTS.coil_length; %make stator length equal to HTS length (t
 %% HTS Winding Type
 %Only use one type by commenting out the other one
 
-HTS.winding_type = 'race_track'; % HTS rotor winding is conventional trapezoidal race track winding
-%HTS.winding_type = 'wave';   %HTS rotor winding is in the shape of wave winding (i.e. potato masher)
+%HTS.winding_type = 'race_track'; % HTS rotor winding is conventional trapezoidal race track winding
+HTS.winding_type = 'wave';   %HTS rotor winding is in the shape of wave winding (i.e. potato masher)
 
 
 %% Rotor HTS Parameters and Excitation Current
@@ -71,8 +71,7 @@ stator.Nseries = stator.Ncoil_per_phase/stator.Nparalel;  %Number of series conn
 stator.fill_factor = 0.8;       %Fill factor (independent or calculated according to stator coil cross section area)
 
 %Litz Wire Parameters
-%stator.Litz_N_strands = 50;   %Number of strands of the Litz wire, used for eddy/proximity loss calculations, a value of 50-200 seems enough for DD wind turbines
-stator.Litz_N_strands = 400;   %Number of strands of the Litz wire, used for eddy/proximity loss calculations, a value of 250 is tried for aerospace application
+stator.Litz_N_strands = 50;   %Number of strands of the Litz wire, used for eddy/proximity loss calculations, a value of 50-200 seems enough for DD wind turbines
 stator.Litz_fill_factor = 1; % Ignored for now, the overall fill factor is included in the stator.fill_factor, can be separated later on
 
 
@@ -86,7 +85,7 @@ stator.coil_pitch = stator.R_mean * (stator.coil_angle *pi() /180); %[m], Coil p
 stator.coil_width = stator.coil_pitch * stator.coil_width_to_coil_pitch_ratio ;    %meters, Width of the stator coil on one side
 %stator.coil_thickness = 25/1000;    %meters, Thickness of single stator coil
 
-stator.R_bending = 20/1000;     %meters, Bending radius of the stator coils at the four outer corners
+stator.R_bending = 30/1000;     %meters, Bending radius of the stator coils at the four outer corners
 
 %% Stator Outer Inner Dimensions
 
@@ -101,7 +100,7 @@ HTS.tape_thickness = 0.2; %[mm] single HTS tape thickness
 %% HTS Coil Parameters, Rotor Outer Inner Dimensions
 %Secondary parameters
 HTS.pole_pitch = 2 * pi * HTS.R_mean / machine.Npole;  %[m] Magnetic pole pitch of the rotor HTS coils
-HTS.distance_to_next = 5/1000; %[m], distance between two adjacent HTS coils at mean radius
+HTS.distance_to_next = 10/1000; %[m], distance between two adjacent HTS coils at mean radius
 HTS.gap_pancake = 1/1000; %[m], Gap between two pancake coils of HTS, default to 1 mm
 
 HTS.coil_pitch = HTS.pole_pitch - HTS.distance_to_next; %[m] Coil pitch at mean radius of HTS coils
@@ -117,7 +116,7 @@ HTS.R_inner = HTS.R_mean - 0.5 * HTS.coil_length - HTS.coil_width; %[m], HTS Inn
 
 
 %% Air Gap, Axial Gap, Cryostat Thickness
-machine.airgap_mechanical = 1/1000; %[m], mechanical airgap between stator and rotor
+machine.airgap_mechanical = 4.5/1000; %[m], mechanical airgap between stator and rotor
 machine.airgap_cryostat = 10/1000; %[m], Gap required for cryostat, includes vacuum thickness in axial length, and the thicknes of the cryostat in axial direction (if exists): HTS surface to mechanical gap starting point
 machine.airgap_magnetic = machine.airgap_cryostat + machine.airgap_mechanical; %[m] Magnetic airgap (i.e. HTS surface to stator coil surface, depends on cryostat dimensions and mechanical airgap)
 

@@ -60,15 +60,15 @@ number_of_inputs = 12; %Number of optimization inputs
 %12 - HTS.pole_inner_ratio;
 
 %Lower and Upper Bounds for the optimization Inputs
-bounds = [10 12;      % Number of Poles/4 ( the value divided by 4) due to simulation constraints
-          4 9;       % J (current density) A/mm^2
-          0.8 0.8;    % 3- HTS.coil_length
-          80 150;     % 4- HTS.N_turns
-          60 150;     % 5- stator.N_turns
-          0.35 0.45;   % 6- stator.coil_width_to_coil_pitch_ratio
-          0.03 0.06;      % 7- stator.coil_thickness    
-          5  5;          %8- machine.Nstacks
-          3  3; %];          % 9- HTS.R_mean   
+bounds = [4 4;      % Number of Poles/4 ( the value divided by 4) due to simulation constraints
+          12 25;       % J (current density) A/mm^2
+          0.075 0.2;    % 3- HTS.coil_length
+          20 100;     % 4- HTS.N_turns
+          10 40;     % 5- stator.N_turns
+          0.2 0.4;   % 6- stator.coil_width_to_coil_pitch_ratio
+          0.015 0.03;      % 7- stator.coil_thickness    
+          1  1;          %8- machine.Nstacks
+          0.25  0.25; %];          % 9- HTS.R_mean   
 %Extra parameters for the wave winding type
           0.2 0.5;   % 10- HTS.distance_inner_to_bottom
           0.8 1.2;   % 11- HTS.pole_outer_ratio;
@@ -89,8 +89,8 @@ IntCon = [1, 4, 5, 8]; % The first variable is integer or [1,3] first and third 
 
 %% Optimization Settings
 % Set nondefault solver options
-options = optimoptions("ga","PopulationSize",400, ...
-                            "MaxGenerations",200,...
+options = optimoptions("ga","PopulationSize",500, ...
+                            "MaxGenerations",100,...
                             "MaxStallGenerations",20,... 
                             "UseParallel",true, ...
                             "ConstraintTolerance",0.1, ...
