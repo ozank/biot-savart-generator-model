@@ -72,7 +72,7 @@ stator.fill_factor = 0.8;       %Fill factor (independent or calculated accordin
 
 %Litz Wire Parameters
 %stator.Litz_N_strands = 50;   %Number of strands of the Litz wire, used for eddy/proximity loss calculations, a value of 50-200 seems enough for DD wind turbines
-stator.Litz_N_strands = 400;   %Number of strands of the Litz wire, used for eddy/proximity loss calculations, a value of 250 is tried for aerospace application
+stator.Litz_N_strands = 250;   %Number of strands of the Litz wire, used for eddy/proximity loss calculations, a value of 250 is tried for aerospace application
 stator.Litz_fill_factor = 1; % Ignored for now, the overall fill factor is included in the stator.fill_factor, can be separated later on
 
 

@@ -61,11 +61,11 @@ number_of_inputs = 12; %Number of optimization inputs
 
 %Lower and Upper Bounds for the optimization Inputs
 bounds = [4 4;      % Number of Poles/4 ( the value divided by 4) due to simulation constraints
-          60 90;       % J (current density) A/mm^2
+          10 40;       % J (current density) A/mm^2
           0.075 0.2;    % 3- HTS.coil_length
-          20 100;     % 4- HTS.N_turns
-          10 40;     % 5- stator.N_turns
-          0.2 0.4;   % 6- stator.coil_width_to_coil_pitch_ratio
+          10 120;     % 4- HTS.N_turns
+          10 200;     % 5- stator.N_turns
+          0.2 0.5;   % 6- stator.coil_width_to_coil_pitch_ratio
           0.015 0.03;      % 7- stator.coil_thickness    
           1  1;          %8- machine.Nstacks
           0.25  0.25; %];          % 9- HTS.R_mean   
@@ -89,20 +89,31 @@ IntCon = [1, 4, 5, 8]; % The first variable is integer or [1,3] first and third 
 
 %% Optimization Settings
 % Set nondefault solver options
-options = optimoptions("ga","PopulationSize",250, ...
+options = optimoptions("gamultiobj","PopulationSize",250, ...
                             "MaxGenerations",100,...
                             "MaxStallGenerations",20,... 
                             "UseParallel",true, ...
                             "ConstraintTolerance",0.1, ...
+                            "FunctionTolerance",0.1,...
                             "Display","iter", ...
-                            "PlotFcn",["gaplotselection","gaplotscores","gaplotstopping","gaplotbestf","gaplotbestindiv","gaplotrange"]);
+                            "PlotFcn",["gaplotpareto","gaplotscores","gaplotstopping","gaplotspread","gaplotrankhist","gaplotrankhist"]);
+
 
 %% RUN Genetic Algorithm
 % Solve
-% Main optimization function: Optimization_cost_with_penalty
-[solution,objectiveValue] = ga(@optimization_cost_with_penalty,...
-    number_of_inputs,[],[],[],[],lower_bounds,upper_bounds,[],IntCon,...
-    options);
+% Main optimization function: Optimization_multi_cost
+[solution,objectiveValue] = gamultiobj(@optimization_multi_cost,number_of_inputs,...
+    [],[],[],[],lower_bounds,upper_bounds,[],IntCon,options);
 
 % Clear variables
 clearvars options
+
+%Plot Pareto Front
+figure()
+plot(objectiveValue(:,2),-objectiveValue(:,1),...
+     'o','MarkerSize',8','LineWidth',2)
+ylabel('Efficiency (%)')
+xlabel('Active Material Mass (kg)')
+xlabel('Required HTS Tape Length (m)')
+fontsize(12,"points")
+grid on

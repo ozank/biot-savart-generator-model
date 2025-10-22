@@ -27,12 +27,12 @@ stator.operating_temperature = 80;      %[C], Assumed operating temperature of t
 
 %% Effective Resistivity at Operating Temperature
 %Stator Winding Material : Copper
-%material.winding_resistivity = (1 + material.copper_temperature_constant * (stator.operating_temperature - 20)) ...
-%                                * material.copper_resistivity_at_room_temperature; %[Ohm/m], effective resistivity at operating temperature 
+material.winding_resistivity = (1 + material.copper_temperature_constant * (stator.operating_temperature - 20)) ...
+                                * material.copper_resistivity_at_room_temperature; %[Ohm/m], effective resistivity at operating temperature 
 
 %Hypercooled aluminium resistivity
-material.winding_resistivity =  2.12 * 10^-10;  %hypercooled aluminium at 35 K
-
+%material.winding_resistivity =  2.12 * 10^-10;  %hypercooled aluminium at 35 K
+%material.winding_resistivity =  1.53 * 10^-10;  %hypercooled aluminium at 30 K
 
 %Stator Winding Material: Aluminium (uncomment the below core if the material is aluminium
 %material.winding_resistivity = (1 + material.aluminium_temperature_constant * (stator.operating_temperature - 20))...

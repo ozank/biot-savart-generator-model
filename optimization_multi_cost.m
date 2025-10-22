@@ -1,20 +1,19 @@
 %---------------------------------------------------
-%  NAME:      Optimization Cost With Penalty.m
-%  WHAT:      Cost funtion for the genetic algoritm:
+%  NAME:      Optimization Multi Cost.m
+%  WHAT:      Cost funtion for the genetic algoritm, suitable for multiobjective optimization:
 %  - Magnetostatic analysis (With Biot Savart Model)
 %  - Electrical Equivalent Circuit Parameters
 %  - Loss Calculations
 %  - Mass/Cost Calculation
 %
 %  Inputs: Defined by the Pre Optimization Function
-%  Penalty: Penalty functions added for efficiency etc.
-%  Outputs: Single Cost function (suitable for singleobjective optimization)
+%  Outputs: Cost function (suitable for multi objective optimization)
 %
-%  AUTHOR:    Ozan Keysan (08/2025), modified (09/2025)
+%  AUTHOR:    Ozan Keysan (08/2025)
 %  REQUIRED:  BSmag Toolbox 20150407 (for magnetic field calculations)
 %----------------------------------------------------
 
-function cost = optimization_cost_with_penalty(inputs)
+function cost = optimization_cost(inputs)
 
 BSmag = BSmag_init(); % Initialize BSmag analysis
 
@@ -104,13 +103,12 @@ calculate_power_efficiency;
 % active material cost, material prices
 calculate_mass_cost;
 
-
 %% COST FUNCTION ADJUSTMENTS
 
 %% Penalty Functions
 
 %Limits for Penalty
-limit.efficiency = 0.99;   % Minimum required efficiency
+limit.efficiency = 0.7;   % Minimum required efficiency
 limit.P_output = 2e6;      % [W], Required power output
 %Extra Limits
 limit.Vphase_max = 1200;  %[Vrms] per phase voltage
@@ -147,12 +145,19 @@ end
 
 penalty.total = penalty.efficiency + penalty.P_output + penalty.V_phase;
 
-%Objective Function
-%Minimum Material Cost
-%cost = HTS.cost + stator.cost + penalty.total;
+
+%% Multi Objective Cost Parameter
+% Default Optimization Function Tries to Minimize
+cost = zeros(1,2); % allocate output depending on number of parameters
+
+%Maximum Efficiency
+cost(1) =  -100*machine.efficiency + penalty.total;  % [0 1] Efficiency of the machine
 
 %Minimum Active Material Mass
-cost = HTS.mass + stator.mass + penalty.total;
+%cost(2) = HTS.mass + stator.mass + penalty.total;
+
+% HTS length
+cost(2) = HTS.length_total  + penalty.total;
 
 
 %Close all figures
